@@ -1,0 +1,358 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin",clear
+{txt}
+{com}. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. ****************************************KAPLAN-MEIER SURVIVAL CURVES********************************************************************
+. 
+. capture drop ztownsendtert
+{txt}
+{com}. xtile ztownsendtert=ztownsend if sample_final==1, nq(3)
+{txt}
+{com}. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. **DEMENTIA**
+. 
+. stset Age_dementia, failure(dem_diag==1) enter(AGE) id(n_eid) scale(1) 
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}dem_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_dementia[_n-1], Age_dementia]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    363,663{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}      6,326{txt}  failures in single-failure-per-subject data
+{res}  4,464,960{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up (years)") ytitle("Proportion Dementia-Free (95%CI)") title("TDI tertile vs. dementia") by (ztownsendtert) tmin(65) tmax(85) 
+
+{col 10}{txt}Failure {bf:_d}: {res}dem_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_dementia
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1A.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1A.gph} saved
+
+{com}. sts test ztownsendtert if sample_final==1 & _t<84
+
+{col 10}{txt}Failure {bf:_d}: {res}dem_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_dementia
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Equality of survivor functions
+Log-rank test
+
+{col 13} {c |}  Observed       Expected
+ztownsendt~t {c |}    events         events
+{hline 13}{c +}{hline 25}
+           1 {c |}{res}      1902        2228.12
+           {txt}2 {c |}{res}      1987        2154.44
+           {txt}3 {c |}{res}      2436        1942.45
+{txt}{hline 13}{c +}{hline 25}
+       Total {c |}{res}      6325        6325.00
+
+                       {txt}chi2(2) = {res}186.31
+                       {txt}Pr>chi2 = {res}0.0000
+{txt}
+{com}. stcox i.ztownsendtert if sample_final==1 & _t<84
+
+{col 10}{txt}Failure {bf:_d}: {res}dem_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_dementia
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-73278.258
+{txt}Iteration 1:  Log likelihood = {res} -73188.74
+{txt}Iteration 2:  Log likelihood = {res}-73188.396
+{txt}Iteration 3:  Log likelihood = {res}-73188.396
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res}-73188.396
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:363,424}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:363,424}
+{txt}No. of failures = {res}{ralign 11:6,325}
+{txt}Time at risk    = {res}{ralign 11:4,461,553.8}
+{col 56}{txt}{lalign 13:LR chi2({res:2})} = {res}{ralign 7:179.72}
+{txt}Log likelihood = {res}-73188.396{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0000}
+
+{txt}{hline 14}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}           _t{col 15}{c |} Haz. ratio{col 27}   Std. err.{col 39}      z{col 47}   P>|z|{col 55}     [95% con{col 68}f. interval]
+{hline 14}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+ztownsendtert {c |}
+{space 11}2  {c |}{col 15}{res}{space 2} 1.080501{col 27}{space 2} .0346619{col 38}{space 1}    2.41{col 47}{space 3}0.016{col 55}{space 4} 1.014657{col 68}{space 3} 1.150619
+{txt}{space 11}3  {c |}{col 15}{res}{space 2} 1.469612{col 27}{space 2} .0449859{col 38}{space 1}   12.58{col 47}{space 3}0.000{col 55}{space 4} 1.384034{col 68}{space 3} 1.560481
+{txt}{hline 14}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up (years)") ytitle("Proportion Dementia-Free (95%CI)") title("TDI tertile vs. all-cause dementia") by (ztownsendtert) tmin(65) tmax(85) risktable
+
+{col 10}{txt}Failure {bf:_d}: {res}dem_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_dementia
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1A1.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1A1.gph} saved
+
+{com}. 
+. 
+. **PD**
+. 
+. stset Age_PD, failure(PD_diag==1) enter(AGE) id(n_eid) scale(1) 
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}PD_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_PD[_n-1], Age_PD]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    363,663{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}      2,586{txt}  failures in single-failure-per-subject data
+{res}  4,470,856{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up (years)") ytitle("Proportion PD-Free (95%CI)") title("TDI tertile vs. all-cause PD") by (ztownsendtert) tmin(65) tmax(85) 
+
+{col 10}{txt}Failure {bf:_d}: {res}PD_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_PD
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1B.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1B.gph} saved
+
+{com}. 
+. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up") ytitle("Proportion PD-Free (95%CI)") title("TDI tertile vs. all-cause PD") by (ztownsendtert) tmin(65) tmax(85) risktable
+
+{col 10}{txt}Failure {bf:_d}: {res}PD_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_PD
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1B1.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1B1.gph} saved
+
+{com}. 
+. 
+. sts test ztownsendtert if sample_final==1 & _t<84 
+
+{col 10}{txt}Failure {bf:_d}: {res}PD_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_PD
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Equality of survivor functions
+Log-rank test
+
+{col 13} {c |}  Observed       Expected
+ztownsendt~t {c |}    events         events
+{hline 13}{c +}{hline 25}
+           1 {c |}{res}       873         902.80
+           {txt}2 {c |}{res}       851         877.57
+           {txt}3 {c |}{res}       862         805.64
+{txt}{hline 13}{c +}{hline 25}
+       Total {c |}{res}      2586        2586.00
+
+                       {txt}chi2(2) =   {res}5.74
+                       {txt}Pr>chi2 = {res}0.0568
+{txt}
+{com}. stcox i.ztownsendtert if sample_final==1 & _t<84
+
+{col 10}{txt}Failure {bf:_d}: {res}PD_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_PD
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-30560.188
+{txt}Iteration 1:  Log likelihood = {res}-30557.355
+{txt}Iteration 2:  Log likelihood = {res}-30557.354
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res}-30557.354
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:363,416}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:363,416}
+{txt}No. of failures = {res}{ralign 11:2,586}
+{txt}Time at risk    = {res}{ralign 11:4,467,336.5}
+{col 56}{txt}{lalign 13:LR chi2({res:2})} = {res}{ralign 7:5.67}
+{txt}Log likelihood = {res}-30557.354{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0588}
+
+{txt}{hline 14}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}           _t{col 15}{c |} Haz. ratio{col 27}   Std. err.{col 39}      z{col 47}   P>|z|{col 55}     [95% con{col 68}f. interval]
+{hline 14}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+ztownsendtert {c |}
+{space 11}2  {c |}{col 15}{res}{space 2} 1.002845{col 27}{space 2} .0483104{col 38}{space 1}    0.06{col 47}{space 3}0.953{col 55}{space 4} .9124911{col 68}{space 3} 1.102146
+{txt}{space 11}3  {c |}{col 15}{res}{space 2} 1.106594{col 27}{space 2} .0531577{col 38}{space 1}    2.11{col 47}{space 3}0.035{col 55}{space 4} 1.007161{col 68}{space 3} 1.215843
+{txt}{hline 14}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. **DEATH**
+. 
+. stset Age_death, failure(died==1) enter(AGE) id(n_eid) scale(1) 
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}died==1
+{col 1}{txt}Observed time interval: {res}(Age_death[_n-1], Age_death]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    363,663{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}     31,785{txt}  failures in single-failure-per-subject data
+{res}  4,479,161{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up (years)") ytitle("KM Estimated Proportion survival (95%CI)") title("TDI tertile vs. all-cause mortality") by (ztownsendtert) tmin(65) tmax(85) 
+
+{col 10}{txt}Failure {bf:_d}: {res}died==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_death
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1C.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1C.gph} saved
+
+{com}. sts test ztownsendtert if sample_final==1 & _t<84
+
+{col 10}{txt}Failure {bf:_d}: {res}died==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_death
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Equality of survivor functions
+Log-rank test
+
+{col 13} {c |}  Observed       Expected
+ztownsendt~t {c |}    events         events
+{hline 13}{c +}{hline 25}
+           1 {c |}{res}      8991       11005.86
+           {txt}2 {c |}{res}      9868       10737.77
+           {txt}3 {c |}{res}     12923       10038.37
+{txt}{hline 13}{c +}{hline 25}
+       Total {c |}{res}     31782       31782.00
+
+                      {txt}chi2(2) = {res}1270.20
+                      {txt}Pr>chi2 =  {res}0.0000
+{txt}
+{com}. stcox i.ztownsendtert if sample_final==1 & _t<84
+
+{col 10}{txt}Failure {bf:_d}: {res}died==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_death
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-377020.46
+{txt}Iteration 1:  Log likelihood = {res}-376409.54
+{txt}Iteration 2:  Log likelihood = {res}-376406.79
+{txt}Iteration 3:  Log likelihood = {res}-376406.79
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res}-376406.79
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:363,413}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:363,413}
+{txt}No. of failures = {res}{ralign 11:31,782}
+{txt}Time at risk    = {res}{ralign 11:4,475,598.7}
+{col 56}{txt}{lalign 13:LR chi2({res:2})} = {res}{ralign 7:1227.33}
+{txt}Log likelihood = {res}-376406.79{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0000}
+
+{txt}{hline 14}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}           _t{col 15}{c |} Haz. ratio{col 27}   Std. err.{col 39}      z{col 47}   P>|z|{col 55}     [95% con{col 68}f. interval]
+{hline 14}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+ztownsendtert {c |}
+{space 11}2  {c |}{col 15}{res}{space 2} 1.125107{col 27}{space 2} .0164039{col 38}{space 1}    8.08{col 47}{space 3}0.000{col 55}{space 4} 1.093411{col 68}{space 3} 1.157722
+{txt}{space 11}3  {c |}{col 15}{res}{space 2} 1.576969{col 27}{space 2} .0216719{col 38}{space 1}   33.15{col 47}{space 3}0.000{col 55}{space 4}  1.53506{col 68}{space 3} 1.620023
+{txt}{hline 14}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. sts graph if sample_final==1 & _t<84, gwood legend(pos(5)) xlabel(65(5)85) ylabel(0.50(.10)1) xtitle("Age at follow-up (years)") ytitle("KM Estimated Proportion survival (95%CI)") title("TDI tertile vs. all-cause mortality") by (ztownsendtert) tmin(65) tmax(85) risktable
+
+{col 10}{txt}Failure {bf:_d}: {res}died==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_death
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1C1.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1C1.gph} saved
+
+{com}. 
+. 
+. 
+. graph combine "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1A.gph" "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1B.gph" "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1C.gph"
+{res}{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\FIGURES\FIGURE1.gph} saved
+
+{com}. 
+. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

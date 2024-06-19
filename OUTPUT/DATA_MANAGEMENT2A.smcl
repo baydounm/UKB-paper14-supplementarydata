@@ -1,0 +1,2287 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. ************************************************************************************************************************
+. 
+. **Format time-series variables using the do file**
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfin.dta",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. 
+. capture gen double ts_53_0_0 = date(s_53_0_0,"DMY")
+{txt}
+{com}. capture format ts_53_0_0 %td
+{txt}
+{com}. capture label variable ts_53_0_0 "Date of attending assessment centre"
+{txt}
+{com}. 
+. capture gen double ts_53_0_0 = date(s_53_0_0,"DMY")
+{txt}
+{com}. capture format ts_53_0_0 %td
+{txt}
+{com}. capture label variable ts_53_0_0 "Date of attending assessment centre"
+{txt}
+{com}. 
+. capture gen double ts_53_1_0 = date(s_53_1_0,"DMY")
+{txt}
+{com}. capture format ts_53_1_0 %td
+{txt}
+{com}. capture label variable ts_53_1_0 "Date of attending assessment centre"
+{txt}
+{com}. 
+. capture gen double ts_53_2_0 = date(s_53_2_0,"DMY")
+{txt}
+{com}. capture format ts_53_2_0 %td
+{txt}
+{com}. capture label variable ts_53_2_0 "Date of attending assessment centre"
+{txt}
+{com}. 
+. capture gen double ts_53_3_0 = date(s_53_3_0,"DMY")
+{txt}
+{com}. capture format ts_53_3_0 %td
+{txt}
+{com}. capture label variable ts_53_3_0 "Date of attending assessment centre"
+{txt}
+{com}. 
+. capture gen double ts_40000_0_0 = date(s_40000_0_0,"DMY")
+{txt}
+{com}. capture format ts_40000_0_0 %td
+{txt}
+{com}. capture label variable ts_40000_0_0 "Date of death"
+{txt}
+{com}. 
+. capture gen double ts_40000_1_0 = date(s_40000_1_0,"DMY")
+{txt}
+{com}. capture format ts_40000_1_0 %td
+{txt}
+{com}. capture label variable ts_40000_1_0 "Date of death"
+{txt}
+{com}. 
+. 
+. format %18.14f n_40007_0_0
+{txt}
+{com}. format %18.14f n_40007_1_0
+{txt}
+{com}. 
+. **Dementia and Alzheimer's Disease**
+. 
+. capture gen double ts_42018_0_0 = date(s_42018_0_0,"DMY")
+{txt}
+{com}. capture format ts_42018_0_0 %td
+{txt}
+{com}. capture label variable ts_42018_0_0 "Date of all cause dementia report"
+{txt}
+{com}. 
+. capture gen double ts_42020_0_0 = date(s_42020_0_0,"DMY")
+{txt}
+{com}. capture format ts_42020_0_0 %td
+{txt}
+{com}. capture label variable ts_42020_0_0 "Date of alzheimers disease report"
+{txt}
+{com}. 
+. 
+. **Parkinson's and all-cause Parkinsonism***
+. 
+. capture gen double ts_42030_0_0 = date(s_42030_0_0,"DMY")
+{txt}
+{com}. capture format ts_42030_0_0 %td
+{txt}
+{com}. capture label variable ts_42030_0_0 "Date of all cause parkinsonism report"
+{txt}
+{com}. 
+. capture gen double ts_42032_0_0 = date(s_42032_0_0,"DMY")
+{txt}
+{com}. capture format ts_42032_0_0 %td
+{txt}
+{com}. capture label variable ts_42032_0_0 "Date of parkinsons disease report"
+{txt}
+{com}. 
+. 
+. 
+. **forval s1 = (0000 0002:0344) (0992 0994:1002) (1424 1426:1462) (1696 1698:1708) (1840 1842 2054 2070 2074 2098 2108 2110) {c -(}
+. **gen double ts_13`s1'_0_0=date(s_13`s1'_0_0, "DMY")
+. **{c )-}
+. **capture format ts_13`s1'_0_0 %td
+. **{c )-}
+. 
+. 
+. 
+. **0000 to 0344***
+. gen double ts_130000_0_0 = date(s_130000_0_0,"DMY")
+{txt}(502,383 missing values generated)
+
+{com}. format ts_130000_0_0 %td
+{txt}
+{com}. capture drop s_130000_0_0
+{txt}
+{com}. label variable ts_130000_0_0 "Date A00 first reported (cholera)"
+{txt}
+{com}. gen double ts_130002_0_0 = date(s_130002_0_0,"DMY")
+{txt}(502,248 missing values generated)
+
+{com}. format ts_130002_0_0 %td
+{txt}
+{com}. capture drop s_130002_0_0
+{txt}
+{com}. label variable ts_130002_0_0 "Date A01 first reported (typhoid and paratyphoid fevers)"
+{txt}
+{com}. gen double ts_130004_0_0 = date(s_130004_0_0,"DMY")
+{txt}(501,613 missing values generated)
+
+{com}. format ts_130004_0_0 %td
+{txt}
+{com}. capture drop s_130004_0_0
+{txt}
+{com}. label variable ts_130004_0_0 "Date A02 first reported (other salmonella infections)"
+{txt}
+{com}. gen double ts_130006_0_0 = date(s_130006_0_0,"DMY")
+{txt}(502,197 missing values generated)
+
+{com}. format ts_130006_0_0 %td
+{txt}
+{com}. capture drop s_130006_0_0
+{txt}
+{com}. label variable ts_130006_0_0 "Date A03 first reported (shigellosis)"
+{txt}
+{com}. gen double ts_130008_0_0 = date(s_130008_0_0,"DMY")
+{txt}(493,988 missing values generated)
+
+{com}. format ts_130008_0_0 %td
+{txt}
+{com}. capture drop s_130008_0_0
+{txt}
+{com}. label variable ts_130008_0_0 "Date A04 first reported (other bacterial intestinal infections)"
+{txt}
+{com}. gen double ts_130010_0_0 = date(s_130010_0_0,"DMY")
+{txt}(502,006 missing values generated)
+
+{com}. format ts_130010_0_0 %td
+{txt}
+{com}. capture drop s_130010_0_0
+{txt}
+{com}. label variable ts_130010_0_0 "Date A05 first reported (other bacterial foodborne intoxications)"
+{txt}
+{com}. gen double ts_130012_0_0 = date(s_130012_0_0,"DMY")
+{txt}(502,291 missing values generated)
+
+{com}. format ts_130012_0_0 %td
+{txt}
+{com}. capture drop s_130012_0_0
+{txt}
+{com}. label variable ts_130012_0_0 "Date A06 first reported (amoebiasis)"
+{txt}
+{com}. gen double ts_130014_0_0 = date(s_130014_0_0,"DMY")
+{txt}(501,901 missing values generated)
+
+{com}. format ts_130014_0_0 %td
+{txt}
+{com}. capture drop s_130014_0_0
+{txt}
+{com}. label variable ts_130014_0_0 "Date A07 first reported (other protozoal intestinal diseases)"
+{txt}
+{com}. gen double ts_130016_0_0 = date(s_130016_0_0,"DMY")
+{txt}(496,799 missing values generated)
+
+{com}. format ts_130016_0_0 %td
+{txt}
+{com}. capture drop s_130016_0_0
+{txt}
+{com}. label variable ts_130016_0_0 "Date A08 first reported (viral and other specified intestinal infections)"
+{txt}
+{com}. gen double ts_130018_0_0 = date(s_130018_0_0,"DMY")
+{txt}(477,863 missing values generated)
+
+{com}. format ts_130018_0_0 %td
+{txt}
+{com}. capture drop s_130018_0_0
+{txt}
+{com}. label variable ts_130018_0_0 "Date A09 first reported (diarrhoea and gastro-enteritis of presumed infectious origin)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130020_0_0 = date(s_130020_0_0,"DMY")
+{txt}(499,695 missing values generated)
+
+{com}. format ts_130020_0_0 %td
+{txt}
+{com}. capture drop s_130020_0_0
+{txt}
+{com}. label variable ts_130020_0_0 "Date A15 first reported (respiratory tuberculosis, bacteriologically and histologically confirmed)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130022_0_0 = date(s_130022_0_0,"DMY")
+{txt}(501,738 missing values generated)
+
+{com}. format ts_130022_0_0 %td
+{txt}
+{com}. capture drop s_130022_0_0
+{txt}
+{com}. label variable ts_130022_0_0 "Date A16 first reported (respiratory tuberculosis, not confirmed bacteriologically or histologically)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130024_0_0 = date(s_130024_0_0,"DMY")
+{txt}(502,387 missing values generated)
+
+{com}. format ts_130024_0_0 %td
+{txt}
+{com}. capture drop s_130024_0_0
+{txt}
+{com}. label variable ts_130024_0_0 "Date A17 first reported (tuberculosis of nervous system)"
+{txt}
+{com}. gen double ts_130026_0_0 = date(s_130026_0_0,"DMY")
+{txt}(502,213 missing values generated)
+
+{com}. format ts_130026_0_0 %td
+{txt}
+{com}. capture drop s_130026_0_0
+{txt}
+{com}. label variable ts_130026_0_0 "Date A18 first reported (tuberculosis of other organs)"
+{txt}
+{com}. gen double ts_130028_0_0 = date(s_130028_0_0,"DMY")
+{txt}(502,381 missing values generated)
+
+{com}. format ts_130028_0_0 %td
+{txt}
+{com}. capture drop s_130028_0_0
+{txt}
+{com}. label variable ts_130028_0_0 "Date A19 first reported (miliary tuberculosis)"
+{txt}
+{com}. gen double ts_130030_0_0 = date(s_130030_0_0,"DMY")
+{txt}(502,401 missing values generated)
+
+{com}. format ts_130030_0_0 %td
+{txt}
+{com}. capture drop s_130030_0_0
+{txt}
+{com}. label variable ts_130030_0_0 "Date A20 first reported (plague)"
+{txt}
+{com}. gen double ts_130034_0_0 = date(s_130034_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130034_0_0 %td
+{txt}
+{com}. capture drop s_130034_0_0
+{txt}
+{com}. label variable ts_130034_0_0 "Date A22 first reported (anthrax)"
+{txt}
+{com}. gen double ts_130036_0_0 = date(s_130036_0_0,"DMY")
+{txt}(502,376 missing values generated)
+
+{com}. format ts_130036_0_0 %td
+{txt}
+{com}. capture drop s_130036_0_0
+{txt}
+{com}. label variable ts_130036_0_0 "Date A23 first reported (brucellosis)"
+{txt}
+{com}. gen double ts_130038_0_0 = date(s_130038_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130038_0_0 %td
+{txt}
+{com}. capture drop s_130038_0_0
+{txt}
+{com}. label variable ts_130038_0_0 "Date A24 first reported (glanders and melioidosis)"
+{txt}
+{com}. gen double ts_130040_0_0 = date(s_130040_0_0,"DMY")
+{txt}(502,406 missing values generated)
+
+{com}. format ts_130040_0_0 %td
+{txt}
+{com}. capture drop s_130040_0_0
+{txt}
+{com}. label variable ts_130040_0_0 "Date A25 first reported (rat-bite fevers)"
+{txt}
+{com}. gen double ts_130042_0_0 = date(s_130042_0_0,"DMY")
+{txt}(502,396 missing values generated)
+
+{com}. format ts_130042_0_0 %td
+{txt}
+{com}. capture drop s_130042_0_0
+{txt}
+{com}. label variable ts_130042_0_0 "Date A26 first reported (erysipeloid)"
+{txt}
+{com}. gen double ts_130044_0_0 = date(s_130044_0_0,"DMY")
+{txt}(502,374 missing values generated)
+
+{com}. format ts_130044_0_0 %td
+{txt}
+{com}. capture drop s_130044_0_0
+{txt}
+{com}. label variable ts_130044_0_0 "Date A27 first reported (leptospirosis)"
+{txt}
+{com}. gen double ts_130046_0_0 = date(s_130046_0_0,"DMY")
+{txt}(502,344 missing values generated)
+
+{com}. format ts_130046_0_0 %td
+{txt}
+{com}. capture drop s_130046_0_0
+{txt}
+{com}. label variable ts_130046_0_0 "Date A28 first reported (other zoonotic bacterial diseases, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130048_0_0 = date(s_130048_0_0,"DMY")
+{txt}(502,406 missing values generated)
+
+{com}. format ts_130048_0_0 %td
+{txt}
+{com}. capture drop s_130048_0_0
+{txt}
+{com}. label variable ts_130048_0_0 "Date A30 first reported (leprosy [hansens disease])"
+{txt}
+{com}. gen double ts_130050_0_0 = date(s_130050_0_0,"DMY")
+{txt}(502,249 missing values generated)
+
+{com}. format ts_130050_0_0 %td
+{txt}
+{com}. capture drop s_130050_0_0
+{txt}
+{com}. label variable ts_130050_0_0 "Date A31 first reported (infection due to other mycobacteria)"
+{txt}
+{com}. gen double ts_130052_0_0 = date(s_130052_0_0,"DMY")
+{txt}(502,382 missing values generated)
+
+{com}. format ts_130052_0_0 %td
+{txt}
+{com}. capture drop s_130052_0_0
+{txt}
+{com}. label variable ts_130052_0_0 "Date A32 first reported (listeriosis)"
+{txt}
+{com}. gen double ts_130054_0_0 = date(s_130054_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130054_0_0 %td
+{txt}
+{com}. capture drop s_130054_0_0
+{txt}
+{com}. label variable ts_130054_0_0 "Date A33 first reported (tetanus neonatorum)"
+{txt}
+{com}. gen double ts_130058_0_0 = date(s_130058_0_0,"DMY")
+{txt}(502,290 missing values generated)
+
+{com}. format ts_130058_0_0 %td
+{txt}
+{com}. capture drop s_130058_0_0
+{txt}
+{com}. label variable ts_130058_0_0 "Date A35 first reported (other tetanus)"
+{txt}
+{com}. gen double ts_130060_0_0 = date(s_130060_0_0,"DMY")
+{txt}(502,262 missing values generated)
+
+{com}. format ts_130060_0_0 %td
+{txt}
+{com}. capture drop s_130060_0_0
+{txt}
+{com}. label variable ts_130060_0_0 "Date A36 first reported (diphtheria)"
+{txt}
+{com}. gen double ts_130062_0_0 = date(s_130062_0_0,"DMY")
+{txt}(499,914 missing values generated)
+
+{com}. format ts_130062_0_0 %td
+{txt}
+{com}. capture drop s_130062_0_0
+{txt}
+{com}. label variable ts_130062_0_0 "Date A37 first reported (whooping cough)"
+{txt}
+{com}. gen double ts_130064_0_0 = date(s_130064_0_0,"DMY")
+{txt}(500,881 missing values generated)
+
+{com}. format ts_130064_0_0 %td
+{txt}
+{com}. capture drop s_130064_0_0
+{txt}
+{com}. label variable ts_130064_0_0 "Date A38 first reported (scarlet fever)"
+{txt}
+{com}. gen double ts_130066_0_0 = date(s_130066_0_0,"DMY")
+{txt}(502,292 missing values generated)
+
+{com}. format ts_130066_0_0 %td
+{txt}
+{com}. capture drop s_130066_0_0
+{txt}
+{com}. label variable ts_130066_0_0 "Date A39 first reported (meningococcal infection)"
+{txt}
+{com}. gen double ts_130068_0_0 = date(s_130068_0_0,"DMY")
+{txt}(501,594 missing values generated)
+
+{com}. format ts_130068_0_0 %td
+{txt}
+{com}. capture drop s_130068_0_0
+{txt}
+{com}. label variable ts_130068_0_0 "Date A40 first reported (streptococcal septicaemia)"
+{txt}
+{com}. gen double ts_130070_0_0 = date(s_130070_0_0,"DMY")
+{txt}(486,503 missing values generated)
+
+{com}. format ts_130070_0_0 %td
+{txt}
+{com}. capture drop s_130070_0_0
+{txt}
+{com}. label variable ts_130070_0_0 "Date A41 first reported (other septicaemia)"
+{txt}
+{com}. gen double ts_130072_0_0 = date(s_130072_0_0,"DMY")
+{txt}(502,190 missing values generated)
+
+{com}. format ts_130072_0_0 %td
+{txt}
+{com}. capture drop s_130072_0_0
+{txt}
+{com}. label variable ts_130072_0_0 "Date A42 first reported (actinomycosis)"
+{txt}
+{com}. gen double ts_130074_0_0 = date(s_130074_0_0,"DMY")
+{txt}(502,406 missing values generated)
+
+{com}. format ts_130074_0_0 %td
+{txt}
+{com}. capture drop s_130074_0_0
+{txt}
+{com}. label variable ts_130074_0_0 "Date A43 first reported (nocardiosis)"
+{txt}
+{com}. gen double ts_130076_0_0 = date(s_130076_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130076_0_0 %td
+{txt}
+{com}. capture drop s_130076_0_0
+{txt}
+{com}. label variable ts_130076_0_0 "Date A44 first reported (bartonellosis)"
+{txt}
+{com}. gen double ts_130078_0_0 = date(s_130078_0_0,"DMY")
+{txt}(502,081 missing values generated)
+
+{com}. format ts_130078_0_0 %td
+{txt}
+{com}. capture drop s_130078_0_0
+{txt}
+{com}. label variable ts_130078_0_0 "Date A46 first reported (erysipelas)"
+{txt}
+{com}. gen double ts_130080_0_0 = date(s_130080_0_0,"DMY")
+{txt}(502,205 missing values generated)
+
+{com}. format ts_130080_0_0 %td
+{txt}
+{com}. capture drop s_130080_0_0
+{txt}
+{com}. label variable ts_130080_0_0 "Date A48 first reported (other bacterial diseases, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130082_0_0 = date(s_130082_0_0,"DMY")
+{txt}(499,524 missing values generated)
+
+{com}. format ts_130082_0_0 %td
+{txt}
+{com}. capture drop s_130082_0_0
+{txt}
+{com}. label variable ts_130082_0_0 "Date A49 first reported (bacterial infection of unspecified site)"
+{txt}
+{com}. gen double ts_130084_0_0 = date(s_130084_0_0,"DMY")
+{txt}(502,400 missing values generated)
+
+{com}. format ts_130084_0_0 %td
+{txt}
+{com}. capture drop s_130084_0_0
+{txt}
+{com}. label variable ts_130084_0_0 "Date A50 first reported (congenital syphilis)"
+{txt}
+{com}. gen double ts_130086_0_0 = date(s_130086_0_0,"DMY")
+{txt}(502,389 missing values generated)
+
+{com}. format ts_130086_0_0 %td
+{txt}
+{com}. capture drop s_130086_0_0
+{txt}
+{com}. label variable ts_130086_0_0 "Date A51 first reported (early syphilis)"
+{txt}
+{com}. gen double ts_130088_0_0 = date(s_130088_0_0,"DMY")
+{txt}(502,388 missing values generated)
+
+{com}. format ts_130088_0_0 %td
+{txt}
+{com}. capture drop s_130088_0_0
+{txt}
+{com}. label variable ts_130088_0_0 "Date A52 first reported (late syphilis)"
+{txt}
+{com}. gen double ts_130090_0_0 = date(s_130090_0_0,"DMY")
+{txt}(502,379 missing values generated)
+
+{com}. format ts_130090_0_0 %td
+{txt}
+{com}. capture drop s_130090_0_0
+{txt}
+{com}. label variable ts_130090_0_0 "Date A53 first reported (other and unspecified syphilis)"
+{txt}
+{com}. gen double ts_130092_0_0 = date(s_130092_0_0,"DMY")
+{txt}(502,127 missing values generated)
+
+{com}. format ts_130092_0_0 %td
+{txt}
+{com}. capture drop s_130092_0_0
+{txt}
+{com}. label variable ts_130092_0_0 "Date A54 first reported (gonococcal infection)"
+{txt}
+{com}. gen double ts_130094_0_0 = date(s_130094_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130094_0_0 %td
+{txt}
+{com}. capture drop s_130094_0_0
+{txt}
+{com}. label variable ts_130094_0_0 "Date A55 first reported (chlamydial lymphogranuloma (venereum))"
+{txt}
+{com}. gen double ts_130096_0_0 = date(s_130096_0_0,"DMY")
+{txt}(502,325 missing values generated)
+
+{com}. format ts_130096_0_0 %td
+{txt}
+{com}. capture drop s_130096_0_0
+{txt}
+{com}. label variable ts_130096_0_0 "Date A56 first reported (other sexually transmitted chlamydial diseases)"
+{txt}
+{com}. gen double ts_130100_0_0 = date(s_130100_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130100_0_0 %td
+{txt}
+{com}. capture drop s_130100_0_0
+{txt}
+{com}. label variable ts_130100_0_0 "Date A58 first reported (granuloma inguinale)"
+{txt}
+{com}. gen double ts_130102_0_0 = date(s_130102_0_0,"DMY")
+{txt}(502,319 missing values generated)
+
+{com}. format ts_130102_0_0 %td
+{txt}
+{com}. capture drop s_130102_0_0
+{txt}
+{com}. label variable ts_130102_0_0 "Date A59 first reported (trichomoniasis)"
+{txt}
+{com}. gen double ts_130104_0_0 = date(s_130104_0_0,"DMY")
+{txt}(501,963 missing values generated)
+
+{com}. format ts_130104_0_0 %td
+{txt}
+{com}. capture drop s_130104_0_0
+{txt}
+{com}. label variable ts_130104_0_0 "Date A60 first reported (anogenital herpesviral [herpes simplex] infections)"
+{txt}
+{com}. gen double ts_130106_0_0 = date(s_130106_0_0,"DMY")
+{txt}(500,563 missing values generated)
+
+{com}. format ts_130106_0_0 %td
+{txt}
+{com}. capture drop s_130106_0_0
+{txt}
+{com}. label variable ts_130106_0_0 "Date A63 first reported (other predominantly sexually transmitted diseases, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130108_0_0 = date(s_130108_0_0,"DMY")
+{txt}(502,406 missing values generated)
+
+{com}. format ts_130108_0_0 %td
+{txt}
+{com}. capture drop s_130108_0_0
+{txt}
+{com}. label variable ts_130108_0_0 "Date A64 first reported (unspecified sexually transmitted disease)"
+{txt}
+{com}. gen double ts_130112_0_0 = date(s_130112_0_0,"DMY")
+{txt}(502,385 missing values generated)
+
+{com}. format ts_130112_0_0 %td
+{txt}
+{com}. capture drop s_130112_0_0
+{txt}
+{com}. label variable ts_130112_0_0 "Date A66 first reported (yaws)"
+{txt}
+{com}. gen double ts_130114_0_0 = date(s_130114_0_0,"DMY")
+{txt}(502,403 missing values generated)
+
+{com}. format ts_130114_0_0 %td
+{txt}
+{com}. capture drop s_130114_0_0
+{txt}
+{com}. label variable ts_130114_0_0 "Date A67 first reported (pinta [carate])"
+{txt}
+{com}. gen double ts_130116_0_0 = date(s_130116_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130116_0_0 %td
+{txt}
+{com}. capture drop s_130116_0_0
+{txt}
+{com}. label variable ts_130116_0_0 "Date A68 first reported (relapsing fevers)"
+{txt}
+{com}. gen double ts_130118_0_0 = date(s_130118_0_0,"DMY")
+{txt}(502,089 missing values generated)
+
+{com}. format ts_130118_0_0 %td
+{txt}
+{com}. capture drop s_130118_0_0
+{txt}
+{com}. label variable ts_130118_0_0 "Date A69 first reported (other spirochaetal infections)"
+{txt}
+{com}. gen double ts_130120_0_0 = date(s_130120_0_0,"DMY")
+{txt}(502,377 missing values generated)
+
+{com}. format ts_130120_0_0 %td
+{txt}
+{com}. capture drop s_130120_0_0
+{txt}
+{com}. label variable ts_130120_0_0 "Date A70 first reported (chlamydia psittaci infection)"
+{txt}
+{com}. gen double ts_130122_0_0 = date(s_130122_0_0,"DMY")
+{txt}(502,374 missing values generated)
+
+{com}. format ts_130122_0_0 %td
+{txt}
+{com}. capture drop s_130122_0_0
+{txt}
+{com}. label variable ts_130122_0_0 "Date A71 first reported (trachoma)"
+{txt}
+{com}. gen double ts_130124_0_0 = date(s_130124_0_0,"DMY")
+{txt}(502,372 missing values generated)
+
+{com}. format ts_130124_0_0 %td
+{txt}
+{com}. capture drop s_130124_0_0
+{txt}
+{com}. label variable ts_130124_0_0 "Date A74 first reported (other diseases caused by chlamydiae)"
+{txt}
+{com}. gen double ts_130126_0_0 = date(s_130126_0_0,"DMY")
+{txt}(502,404 missing values generated)
+
+{com}. format ts_130126_0_0 %td
+{txt}
+{com}. capture drop s_130126_0_0
+{txt}
+{com}. label variable ts_130126_0_0 "Date A75 first reported (typhus fever)"
+{txt}
+{com}. gen double ts_130128_0_0 = date(s_130128_0_0,"DMY")
+{txt}(502,388 missing values generated)
+
+{com}. format ts_130128_0_0 %td
+{txt}
+{com}. capture drop s_130128_0_0
+{txt}
+{com}. label variable ts_130128_0_0 "Date A77 first reported (spotted fever [tick-borne rickettsioses])"
+{txt}
+{com}. gen double ts_130130_0_0 = date(s_130130_0_0,"DMY")
+{txt}(502,399 missing values generated)
+
+{com}. format ts_130130_0_0 %td
+{txt}
+{com}. capture drop s_130130_0_0
+{txt}
+{com}. label variable ts_130130_0_0 "Date A78 first reported (q fever)"
+{txt}
+{com}. gen double ts_130132_0_0 = date(s_130132_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130132_0_0 %td
+{txt}
+{com}. capture drop s_130132_0_0
+{txt}
+{com}. label variable ts_130132_0_0 "Date A79 first reported (other rickettsioses)"
+{txt}
+{com}. gen double ts_130134_0_0 = date(s_130134_0_0,"DMY")
+{txt}(501,888 missing values generated)
+
+{com}. format ts_130134_0_0 %td
+{txt}
+{com}. capture drop s_130134_0_0
+{txt}
+{com}. label variable ts_130134_0_0 "Date A80 first reported (acute poliomyelitis)"
+{txt}
+{com}. gen double ts_130136_0_0 = date(s_130136_0_0,"DMY")
+{txt}(502,342 missing values generated)
+
+{com}. format ts_130136_0_0 %td
+{txt}
+{com}. capture drop s_130136_0_0
+{txt}
+{com}. label variable ts_130136_0_0 "Date A81 first reported (atypical virus infections of central nervous system)"
+{txt}
+{com}. gen double ts_130138_0_0 = date(s_130138_0_0,"DMY")
+{txt}(502,391 missing values generated)
+
+{com}. format ts_130138_0_0 %td
+{txt}
+{com}. capture drop s_130138_0_0
+{txt}
+{com}. label variable ts_130138_0_0 "Date A82 first reported (rabies)"
+{txt}
+{com}. gen double ts_130140_0_0 = date(s_130140_0_0,"DMY")
+{txt}(502,376 missing values generated)
+
+{com}. format ts_130140_0_0 %td
+{txt}
+{com}. capture drop s_130140_0_0
+{txt}
+{com}. label variable ts_130140_0_0 "Date A83 first reported (mosquito-borne viral encephalitis)"
+{txt}
+{com}. gen double ts_130142_0_0 = date(s_130142_0_0,"DMY")
+{txt}(502,401 missing values generated)
+
+{com}. format ts_130142_0_0 %td
+{txt}
+{com}. capture drop s_130142_0_0
+{txt}
+{com}. label variable ts_130142_0_0 "Date A84 first reported (tick-borne viral encephalitis)"
+{txt}
+{com}. gen double ts_130144_0_0 = date(s_130144_0_0,"DMY")
+{txt}(502,394 missing values generated)
+
+{com}. format ts_130144_0_0 %td
+{txt}
+{com}. capture drop s_130144_0_0
+{txt}
+{com}. label variable ts_130144_0_0 "Date A85 first reported (other viral encephalitis, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130146_0_0 = date(s_130146_0_0,"DMY")
+{txt}(502,273 missing values generated)
+
+{com}. format ts_130146_0_0 %td
+{txt}
+{com}. capture drop s_130146_0_0
+{txt}
+{com}. label variable ts_130146_0_0 "Date A86 first reported (unspecified viral encephalitis)"
+{txt}
+{com}. gen double ts_130148_0_0 = date(s_130148_0_0,"DMY")
+{txt}(501,898 missing values generated)
+
+{com}. format ts_130148_0_0 %td
+{txt}
+{com}. capture drop s_130148_0_0
+{txt}
+{com}. label variable ts_130148_0_0 "Date A87 first reported (viral meningitis)"
+{txt}
+{com}. gen double ts_130150_0_0 = date(s_130150_0_0,"DMY")
+{txt}(502,382 missing values generated)
+
+{com}. format ts_130150_0_0 %td
+{txt}
+{com}. capture drop s_130150_0_0
+{txt}
+{com}. label variable ts_130150_0_0 "Date A88 first reported (other viral infections of central nervous system, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130152_0_0 = date(s_130152_0_0,"DMY")
+{txt}(502,371 missing values generated)
+
+{com}. format ts_130152_0_0 %td
+{txt}
+{com}. capture drop s_130152_0_0
+{txt}
+{com}. label variable ts_130152_0_0 "Date A89 first reported (unspecified viral infection of central nervous system)"
+{txt}
+{com}. gen double ts_130154_0_0 = date(s_130154_0_0,"DMY")
+{txt}(502,354 missing values generated)
+
+{com}. format ts_130154_0_0 %td
+{txt}
+{com}. capture drop s_130154_0_0
+{txt}
+{com}. label variable ts_130154_0_0 "Date A90 first reported (dengue fever [classical dengue])"
+{txt}
+{com}. gen double ts_130156_0_0 = date(s_130156_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130156_0_0 %td
+{txt}
+{com}. capture drop s_130156_0_0
+{txt}
+{com}. label variable ts_130156_0_0 "Date A91 first reported (dengue haemorrhagic fever)"
+{txt}
+{com}. gen double ts_130158_0_0 = date(s_130158_0_0,"DMY")
+{txt}(502,395 missing values generated)
+
+{com}. format ts_130158_0_0 %td
+{txt}
+{com}. capture drop s_130158_0_0
+{txt}
+{com}. label variable ts_130158_0_0 "Date A92 first reported (other mosquito-borne viral fevers)"
+{txt}
+{com}. gen double ts_130160_0_0 = date(s_130160_0_0,"DMY")
+{txt}(502,400 missing values generated)
+
+{com}. format ts_130160_0_0 %td
+{txt}
+{com}. capture drop s_130160_0_0
+{txt}
+{com}. label variable ts_130160_0_0 "Date A93 first reported (other arthropod-borne viral fevers, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130162_0_0 = date(s_130162_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130162_0_0 %td
+{txt}
+{com}. capture drop s_130162_0_0
+{txt}
+{com}. label variable ts_130162_0_0 "Date A94 first reported (unspecified arthropod-borne viral fever)"
+{txt}
+{com}. gen double ts_130164_0_0 = date(s_130164_0_0,"DMY")
+{txt}(502,335 missing values generated)
+
+{com}. format ts_130164_0_0 %td
+{txt}
+{com}. capture drop s_130164_0_0
+{txt}
+{com}. label variable ts_130164_0_0 "Date A95 first reported (yellow fever)"
+{txt}
+{com}. gen double ts_130168_0_0 = date(s_130168_0_0,"DMY")
+{txt}(502,374 missing values generated)
+
+{com}. format ts_130168_0_0 %td
+{txt}
+{com}. capture drop s_130168_0_0
+{txt}
+{com}. label variable ts_130168_0_0 "Date A97 first reported (dengue)"
+{txt}
+{com}. gen double ts_130170_0_0 = date(s_130170_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130170_0_0 %td
+{txt}
+{com}. capture drop s_130170_0_0
+{txt}
+{com}. label variable ts_130170_0_0 "Date A98 first reported (other viral haemorrhagic fevers, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130174_0_0 = date(s_130174_0_0,"DMY")
+{txt}(497,489 missing values generated)
+
+{com}. format ts_130174_0_0 %td
+{txt}
+{com}. capture drop s_130174_0_0
+{txt}
+{com}. label variable ts_130174_0_0 "Date B00 first reported (herpesviral [herpes simplex] infections)"
+{txt}
+{com}. gen double ts_130176_0_0 = date(s_130176_0_0,"DMY")
+{txt}(487,121 missing values generated)
+
+{com}. format ts_130176_0_0 %td
+{txt}
+{com}. capture drop s_130176_0_0
+{txt}
+{com}. label variable ts_130176_0_0 "Date B01 first reported (varicella [chickenpox])"
+{txt}
+{com}. gen double ts_130178_0_0 = date(s_130178_0_0,"DMY")
+{txt}(484,472 missing values generated)
+
+{com}. format ts_130178_0_0 %td
+{txt}
+{com}. capture drop s_130178_0_0
+{txt}
+{com}. label variable ts_130178_0_0 "Date B02 first reported (zoster [herpes zoster])"
+{txt}
+{com}. gen double ts_130180_0_0 = date(s_130180_0_0,"DMY")
+{txt}(502,395 missing values generated)
+
+{com}. format ts_130180_0_0 %td
+{txt}
+{com}. capture drop s_130180_0_0
+{txt}
+{com}. label variable ts_130180_0_0 "Date B03 first reported (smallpox)"
+{txt}
+{com}. gen double ts_130184_0_0 = date(s_130184_0_0,"DMY")
+{txt}(491,555 missing values generated)
+
+{com}. format ts_130184_0_0 %td
+{txt}
+{com}. capture drop s_130184_0_0
+{txt}
+{com}. label variable ts_130184_0_0 "Date B05 first reported (measles)"
+{txt}
+{com}. gen double ts_130186_0_0 = date(s_130186_0_0,"DMY")
+{txt}(498,273 missing values generated)
+
+{com}. format ts_130186_0_0 %td
+{txt}
+{com}. capture drop s_130186_0_0
+{txt}
+{com}. label variable ts_130186_0_0 "Date B06 first reported (rubella [german measles])"
+{txt}
+{com}. gen double ts_130188_0_0 = date(s_130188_0_0,"DMY")
+{txt}(484,586 missing values generated)
+
+{com}. format ts_130188_0_0 %td
+{txt}
+{com}. capture drop s_130188_0_0
+{txt}
+{com}. label variable ts_130188_0_0 "Date B07 first reported (viral warts)"
+{txt}
+{com}. gen double ts_130190_0_0 = date(s_130190_0_0,"DMY")
+{txt}(501,361 missing values generated)
+
+{com}. format ts_130190_0_0 %td
+{txt}
+{com}. capture drop s_130190_0_0
+{txt}
+{com}. label variable ts_130190_0_0 "Date B08 first reported (other viral infections characterised by skin and mucous membrane lesions, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130192_0_0 = date(s_130192_0_0,"DMY")
+{txt}(502,379 missing values generated)
+
+{com}. format ts_130192_0_0 %td
+{txt}
+{com}. capture drop s_130192_0_0
+{txt}
+{com}. label variable ts_130192_0_0 "Date B09 first reported (unspecified viral infection characterised by skin and mucous membrane lesions)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130194_0_0 = date(s_130194_0_0,"DMY")
+{txt}(501,288 missing values generated)
+
+{com}. format ts_130194_0_0 %td
+{txt}
+{com}. capture drop s_130194_0_0
+{txt}
+{com}. label variable ts_130194_0_0 "Date B15 first reported (acute hepatitis a)"
+{txt}
+{com}. gen double ts_130196_0_0 = date(s_130196_0_0,"DMY")
+{txt}(501,993 missing values generated)
+
+{com}. format ts_130196_0_0 %td
+{txt}
+{com}. capture drop s_130196_0_0
+{txt}
+{com}. label variable ts_130196_0_0 "Date B16 first reported (acute hepatitis b)"
+{txt}
+{com}. gen double ts_130198_0_0 = date(s_130198_0_0,"DMY")
+{txt}(501,952 missing values generated)
+
+{com}. format ts_130198_0_0 %td
+{txt}
+{com}. capture drop s_130198_0_0
+{txt}
+{com}. label variable ts_130198_0_0 "Date B17 first reported (other acute viral hepatitis)"
+{txt}
+{com}. gen double ts_130200_0_0 = date(s_130200_0_0,"DMY")
+{txt}(501,531 missing values generated)
+
+{com}. format ts_130200_0_0 %td
+{txt}
+{com}. capture drop s_130200_0_0
+{txt}
+{com}. label variable ts_130200_0_0 "Date B18 first reported (chronic viral hepatitis)"
+{txt}
+{com}. gen double ts_130202_0_0 = date(s_130202_0_0,"DMY")
+{txt}(501,061 missing values generated)
+
+{com}. format ts_130202_0_0 %td
+{txt}
+{com}. capture drop s_130202_0_0
+{txt}
+{com}. label variable ts_130202_0_0 "Date B19 first reported (unspecified viral hepatitis)"
+{txt}
+{com}. gen double ts_130204_0_0 = date(s_130204_0_0,"DMY")
+{txt}(502,339 missing values generated)
+
+{com}. format ts_130204_0_0 %td
+{txt}
+{com}. capture drop s_130204_0_0
+{txt}
+{com}. label variable ts_130204_0_0 "Date B20 first reported (human immunodeficiency virus [hiv] disease resulting in infectious and parasitic diseases)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130206_0_0 = date(s_130206_0_0,"DMY")
+{txt}(502,393 missing values generated)
+
+{com}. format ts_130206_0_0 %td
+{txt}
+{com}. capture drop s_130206_0_0
+{txt}
+{com}. label variable ts_130206_0_0 "Date B21 first reported (human immunodeficiency virus [hiv] disease resulting in malignant neoplasms)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130208_0_0 = date(s_130208_0_0,"DMY")
+{txt}(502,397 missing values generated)
+
+{com}. format ts_130208_0_0 %td
+{txt}
+{com}. capture drop s_130208_0_0
+{txt}
+{com}. label variable ts_130208_0_0 "Date B22 first reported (human immunodeficiency virus [hiv] disease resulting in other specified diseases)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130210_0_0 = date(s_130210_0_0,"DMY")
+{txt}(502,369 missing values generated)
+
+{com}. format ts_130210_0_0 %td
+{txt}
+{com}. capture drop s_130210_0_0
+{txt}
+{com}. label variable ts_130210_0_0 "Date B23 first reported (human immunodeficiency virus [hiv] disease resulting in other conditions)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130212_0_0 = date(s_130212_0_0,"DMY")
+{txt}(501,891 missing values generated)
+
+{com}. format ts_130212_0_0 %td
+{txt}
+{com}. capture drop s_130212_0_0
+{txt}
+{com}. label variable ts_130212_0_0 "Date B24 first reported (unspecified human immunodeficiency virus [hiv] disease)"
+{txt}
+{com}. gen double ts_130214_0_0 = date(s_130214_0_0,"DMY")
+{txt}(502,109 missing values generated)
+
+{com}. format ts_130214_0_0 %td
+{txt}
+{com}. capture drop s_130214_0_0
+{txt}
+{com}. label variable ts_130214_0_0 "Date B25 first reported (cytomegaloviral disease)"
+{txt}
+{com}. gen double ts_130216_0_0 = date(s_130216_0_0,"DMY")
+{txt}(495,366 missing values generated)
+
+{com}. format ts_130216_0_0 %td
+{txt}
+{com}. capture drop s_130216_0_0
+{txt}
+{com}. label variable ts_130216_0_0 "Date B26 first reported (mumps)"
+{txt}
+{com}. gen double ts_130218_0_0 = date(s_130218_0_0,"DMY")
+{txt}(498,947 missing values generated)
+
+{com}. format ts_130218_0_0 %td
+{txt}
+{com}. capture drop s_130218_0_0
+{txt}
+{com}. label variable ts_130218_0_0 "Date B27 first reported (infectious mononucleosis)"
+{txt}
+{com}. gen double ts_130220_0_0 = date(s_130220_0_0,"DMY")
+{txt}(502,201 missing values generated)
+
+{com}. format ts_130220_0_0 %td
+{txt}
+{com}. capture drop s_130220_0_0
+{txt}
+{com}. label variable ts_130220_0_0 "Date B30 first reported (viral conjunctivitis)"
+{txt}
+{com}. gen double ts_130222_0_0 = date(s_130222_0_0,"DMY")
+{txt}(502,169 missing values generated)
+
+{com}. format ts_130222_0_0 %td
+{txt}
+{com}. capture drop s_130222_0_0
+{txt}
+{com}. label variable ts_130222_0_0 "Date B33 first reported (other viral diseases, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130224_0_0 = date(s_130224_0_0,"DMY")
+{txt}(490,258 missing values generated)
+
+{com}. format ts_130224_0_0 %td
+{txt}
+{com}. capture drop s_130224_0_0
+{txt}
+{com}. label variable ts_130224_0_0 "Date B34 first reported (viral infection of unspecified site)"
+{txt}
+{com}. gen double ts_130226_0_0 = date(s_130226_0_0,"DMY")
+{txt}(469,339 missing values generated)
+
+{com}. format ts_130226_0_0 %td
+{txt}
+{com}. capture drop s_130226_0_0
+{txt}
+{com}. label variable ts_130226_0_0 "Date B35 first reported (dermatophytosis)"
+{txt}
+{com}. gen double ts_130228_0_0 = date(s_130228_0_0,"DMY")
+{txt}(496,538 missing values generated)
+
+{com}. format ts_130228_0_0 %td
+{txt}
+{com}. capture drop s_130228_0_0
+{txt}
+{com}. label variable ts_130228_0_0 "Date B36 first reported (other superficial mycoses)"
+{txt}
+{com}. gen double ts_130230_0_0 = date(s_130230_0_0,"DMY")
+{txt}(489,781 missing values generated)
+
+{com}. format ts_130230_0_0 %td
+{txt}
+{com}. capture drop s_130230_0_0
+{txt}
+{com}. label variable ts_130230_0_0 "Date B37 first reported (candidiasis)"
+{txt}
+{com}. gen double ts_130232_0_0 = date(s_130232_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130232_0_0 %td
+{txt}
+{com}. capture drop s_130232_0_0
+{txt}
+{com}. label variable ts_130232_0_0 "Date B38 first reported (coccidioidomycosis)"
+{txt}
+{com}. gen double ts_130234_0_0 = date(s_130234_0_0,"DMY")
+{txt}(502,400 missing values generated)
+
+{com}. format ts_130234_0_0 %td
+{txt}
+{com}. capture drop s_130234_0_0
+{txt}
+{com}. label variable ts_130234_0_0 "Date B39 first reported (histoplasmosis)"
+{txt}
+{com}. gen double ts_130236_0_0 = date(s_130236_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130236_0_0 %td
+{txt}
+{com}. capture drop s_130236_0_0
+{txt}
+{com}. label variable ts_130236_0_0 "Date B40 first reported (blastomycosis)"
+{txt}
+{com}. gen double ts_130240_0_0 = date(s_130240_0_0,"DMY")
+{txt}(502,407 missing values generated)
+
+{com}. format ts_130240_0_0 %td
+{txt}
+{com}. capture drop s_130240_0_0
+{txt}
+{com}. label variable ts_130240_0_0 "Date B42 first reported (sporotrichosis)"
+{txt}
+{com}. gen double ts_130242_0_0 = date(s_130242_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130242_0_0 %td
+{txt}
+{com}. capture drop s_130242_0_0
+{txt}
+{com}. label variable ts_130242_0_0 "Date B43 first reported (chromomycosis and phaeomycotic abscess)"
+{txt}
+{com}. gen double ts_130244_0_0 = date(s_130244_0_0,"DMY")
+{txt}(501,947 missing values generated)
+
+{com}. format ts_130244_0_0 %td
+{txt}
+{com}. capture drop s_130244_0_0
+{txt}
+{com}. label variable ts_130244_0_0 "Date B44 first reported (aspergillosis)"
+{txt}
+{com}. gen double ts_130246_0_0 = date(s_130246_0_0,"DMY")
+{txt}(502,401 missing values generated)
+
+{com}. format ts_130246_0_0 %td
+{txt}
+{com}. capture drop s_130246_0_0
+{txt}
+{com}. label variable ts_130246_0_0 "Date B45 first reported (cryptococcosis)"
+{txt}
+{com}. gen double ts_130248_0_0 = date(s_130248_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130248_0_0 %td
+{txt}
+{com}. capture drop s_130248_0_0
+{txt}
+{com}. label variable ts_130248_0_0 "Date B46 first reported (zygomycosis)"
+{txt}
+{com}. gen double ts_130250_0_0 = date(s_130250_0_0,"DMY")
+{txt}(502,384 missing values generated)
+
+{com}. format ts_130250_0_0 %td
+{txt}
+{com}. capture drop s_130250_0_0
+{txt}
+{com}. label variable ts_130250_0_0 "Date B47 first reported (mycetoma)"
+{txt}
+{com}. gen double ts_130252_0_0 = date(s_130252_0_0,"DMY")
+{txt}(502,379 missing values generated)
+
+{com}. format ts_130252_0_0 %td
+{txt}
+{com}. capture drop s_130252_0_0
+{txt}
+{com}. label variable ts_130252_0_0 "Date B48 first reported (other mycoses, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130254_0_0 = date(s_130254_0_0,"DMY")
+{txt}(501,876 missing values generated)
+
+{com}. format ts_130254_0_0 %td
+{txt}
+{com}. capture drop s_130254_0_0
+{txt}
+{com}. label variable ts_130254_0_0 "Date B49 first reported (unspecified mycosis)"
+{txt}
+{com}. gen double ts_130256_0_0 = date(s_130256_0_0,"DMY")
+{txt}(502,215 missing values generated)
+
+{com}. format ts_130256_0_0 %td
+{txt}
+{com}. capture drop s_130256_0_0
+{txt}
+{com}. label variable ts_130256_0_0 "Date B50 first reported (plasmodium falciparum malaria)"
+{txt}
+{com}. gen double ts_130258_0_0 = date(s_130258_0_0,"DMY")
+{txt}(502,366 missing values generated)
+
+{com}. format ts_130258_0_0 %td
+{txt}
+{com}. capture drop s_130258_0_0
+{txt}
+{com}. label variable ts_130258_0_0 "Date B51 first reported (plasmodium vivax malaria)"
+{txt}
+{com}. gen double ts_130260_0_0 = date(s_130260_0_0,"DMY")
+{txt}(502,404 missing values generated)
+
+{com}. format ts_130260_0_0 %td
+{txt}
+{com}. capture drop s_130260_0_0
+{txt}
+{com}. label variable ts_130260_0_0 "Date B52 first reported (plasmodium malariae malaria)"
+{txt}
+{com}. gen double ts_130262_0_0 = date(s_130262_0_0,"DMY")
+{txt}(502,404 missing values generated)
+
+{com}. format ts_130262_0_0 %td
+{txt}
+{com}. capture drop s_130262_0_0
+{txt}
+{com}. label variable ts_130262_0_0 "Date B53 first reported (other parasitologically confirmed malaria)"
+{txt}
+{com}. gen double ts_130264_0_0 = date(s_130264_0_0,"DMY")
+{txt}(501,511 missing values generated)
+
+{com}. format ts_130264_0_0 %td
+{txt}
+{com}. capture drop s_130264_0_0
+{txt}
+{com}. label variable ts_130264_0_0 "Date B54 first reported (unspecified malaria)"
+{txt}
+{com}. gen double ts_130266_0_0 = date(s_130266_0_0,"DMY")
+{txt}(502,392 missing values generated)
+
+{com}. format ts_130266_0_0 %td
+{txt}
+{com}. capture drop s_130266_0_0
+{txt}
+{com}. label variable ts_130266_0_0 "Date B55 first reported (leishmaniasis)"
+{txt}
+{com}. gen double ts_130270_0_0 = date(s_130270_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130270_0_0 %td
+{txt}
+{com}. capture drop s_130270_0_0
+{txt}
+{com}. label variable ts_130270_0_0 "Date B57 first reported (chagas disease)"
+{txt}
+{com}. gen double ts_130272_0_0 = date(s_130272_0_0,"DMY")
+{txt}(502,346 missing values generated)
+
+{com}. format ts_130272_0_0 %td
+{txt}
+{com}. capture drop s_130272_0_0
+{txt}
+{com}. label variable ts_130272_0_0 "Date B58 first reported (toxoplasmosis)"
+{txt}
+{com}. gen double ts_130274_0_0 = date(s_130274_0_0,"DMY")
+{txt}(502,228 missing values generated)
+
+{com}. format ts_130274_0_0 %td
+{txt}
+{com}. capture drop s_130274_0_0
+{txt}
+{com}. label variable ts_130274_0_0 "Date B59 first reported (pneumocystosis)"
+{txt}
+{com}. gen double ts_130276_0_0 = date(s_130276_0_0,"DMY")
+{txt}(502,395 missing values generated)
+
+{com}. format ts_130276_0_0 %td
+{txt}
+{com}. capture drop s_130276_0_0
+{txt}
+{com}. label variable ts_130276_0_0 "Date B60 first reported (other protozoal diseases, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130280_0_0 = date(s_130280_0_0,"DMY")
+{txt}(502,298 missing values generated)
+
+{com}. format ts_130280_0_0 %td
+{txt}
+{com}. capture drop s_130280_0_0
+{txt}
+{com}. label variable ts_130280_0_0 "Date B65 first reported (schistosomiasis [bilharziasis])"
+{txt}
+{com}. gen double ts_130282_0_0 = date(s_130282_0_0,"DMY")
+{txt}(502,402 missing values generated)
+
+{com}. format ts_130282_0_0 %td
+{txt}
+{com}. capture drop s_130282_0_0
+{txt}
+{com}. label variable ts_130282_0_0 "Date B66 first reported (other fluke infections)"
+{txt}
+{com}. gen double ts_130284_0_0 = date(s_130284_0_0,"DMY")
+{txt}(502,397 missing values generated)
+
+{com}. format ts_130284_0_0 %td
+{txt}
+{com}. capture drop s_130284_0_0
+{txt}
+{com}. label variable ts_130284_0_0 "Date B67 first reported (echinococcosis)"
+{txt}
+{com}. gen double ts_130286_0_0 = date(s_130286_0_0,"DMY")
+{txt}(502,397 missing values generated)
+
+{com}. format ts_130286_0_0 %td
+{txt}
+{com}. capture drop s_130286_0_0
+{txt}
+{com}. label variable ts_130286_0_0 "Date B68 first reported (taeniasis)"
+{txt}
+{com}. gen double ts_130288_0_0 = date(s_130288_0_0,"DMY")
+{txt}(502,403 missing values generated)
+
+{com}. format ts_130288_0_0 %td
+{txt}
+{com}. capture drop s_130288_0_0
+{txt}
+{com}. label variable ts_130288_0_0 "Date B69 first reported (cysticercosis)"
+{txt}
+{com}. gen double ts_130292_0_0 = date(s_130292_0_0,"DMY")
+{txt}(502,395 missing values generated)
+
+{com}. format ts_130292_0_0 %td
+{txt}
+{com}. capture drop s_130292_0_0
+{txt}
+{com}. label variable ts_130292_0_0 "Date B71 first reported (other cestode infections)"
+{txt}
+{com}. gen double ts_130296_0_0 = date(s_130296_0_0,"DMY")
+{txt}(502,392 missing values generated)
+
+{com}. format ts_130296_0_0 %td
+{txt}
+{com}. capture drop s_130296_0_0
+{txt}
+{com}. label variable ts_130296_0_0 "Date B73 first reported (onchocerciasis)"
+{txt}
+{com}. gen double ts_130298_0_0 = date(s_130298_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130298_0_0 %td
+{txt}
+{com}. capture drop s_130298_0_0
+{txt}
+{com}. label variable ts_130298_0_0 "Date B74 first reported (filariasis)"
+{txt}
+{com}. gen double ts_130300_0_0 = date(s_130300_0_0,"DMY")
+{txt}(502,408 missing values generated)
+
+{com}. format ts_130300_0_0 %td
+{txt}
+{com}. capture drop s_130300_0_0
+{txt}
+{com}. label variable ts_130300_0_0 "Date B75 first reported (trichinellosis)"
+{txt}
+{com}. gen double ts_130302_0_0 = date(s_130302_0_0,"DMY")
+{txt}(502,376 missing values generated)
+
+{com}. format ts_130302_0_0 %td
+{txt}
+{com}. capture drop s_130302_0_0
+{txt}
+{com}. label variable ts_130302_0_0 "Date B76 first reported (hookworm diseases)"
+{txt}
+{com}. gen double ts_130304_0_0 = date(s_130304_0_0,"DMY")
+{txt}(502,397 missing values generated)
+
+{com}. format ts_130304_0_0 %td
+{txt}
+{com}. capture drop s_130304_0_0
+{txt}
+{com}. label variable ts_130304_0_0 "Date B77 first reported (ascariasis)"
+{txt}
+{com}. gen double ts_130306_0_0 = date(s_130306_0_0,"DMY")
+{txt}(502,401 missing values generated)
+
+{com}. format ts_130306_0_0 %td
+{txt}
+{com}. capture drop s_130306_0_0
+{txt}
+{com}. label variable ts_130306_0_0 "Date B78 first reported (strongyloidiasis)"
+{txt}
+{com}. gen double ts_130308_0_0 = date(s_130308_0_0,"DMY")
+{txt}(502,404 missing values generated)
+
+{com}. format ts_130308_0_0 %td
+{txt}
+{com}. capture drop s_130308_0_0
+{txt}
+{com}. label variable ts_130308_0_0 "Date B79 first reported (trichuriasis)"
+{txt}
+{com}. gen double ts_130310_0_0 = date(s_130310_0_0,"DMY")
+{txt}(501,635 missing values generated)
+
+{com}. format ts_130310_0_0 %td
+{txt}
+{com}. capture drop s_130310_0_0
+{txt}
+{com}. label variable ts_130310_0_0 "Date B80 first reported (enterobiasis)"
+{txt}
+{com}. gen double ts_130312_0_0 = date(s_130312_0_0,"DMY")
+{txt}(502,392 missing values generated)
+
+{com}. format ts_130312_0_0 %td
+{txt}
+{com}. capture drop s_130312_0_0
+{txt}
+{com}. label variable ts_130312_0_0 "Date B81 first reported (other intestinal helminthiases, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130314_0_0 = date(s_130314_0_0,"DMY")
+{txt}(502,313 missing values generated)
+
+{com}. format ts_130314_0_0 %td
+{txt}
+{com}. capture drop s_130314_0_0
+{txt}
+{com}. label variable ts_130314_0_0 "Date B82 first reported (unspecified intestinal parasitism)"
+{txt}
+{com}. gen double ts_130316_0_0 = date(s_130316_0_0,"DMY")
+{txt}(502,324 missing values generated)
+
+{com}. format ts_130316_0_0 %td
+{txt}
+{com}. capture drop s_130316_0_0
+{txt}
+{com}. label variable ts_130316_0_0 "Date B83 first reported (other helminthiases)"
+{txt}
+{com}. gen double ts_130318_0_0 = date(s_130318_0_0,"DMY")
+{txt}(502,070 missing values generated)
+
+{com}. format ts_130318_0_0 %td
+{txt}
+{com}. capture drop s_130318_0_0
+{txt}
+{com}. label variable ts_130318_0_0 "Date B85 first reported (pediculosis and phthiriasis)"
+{txt}
+{com}. gen double ts_130320_0_0 = date(s_130320_0_0,"DMY")
+{txt}(499,951 missing values generated)
+
+{com}. format ts_130320_0_0 %td
+{txt}
+{com}. capture drop s_130320_0_0
+{txt}
+{com}. label variable ts_130320_0_0 "Date B86 first reported (scabies)"
+{txt}
+{com}. gen double ts_130322_0_0 = date(s_130322_0_0,"DMY")
+{txt}(502,400 missing values generated)
+
+{com}. format ts_130322_0_0 %td
+{txt}
+{com}. capture drop s_130322_0_0
+{txt}
+{com}. label variable ts_130322_0_0 "Date B87 first reported (myiasis)"
+{txt}
+{com}. gen double ts_130324_0_0 = date(s_130324_0_0,"DMY")
+{txt}(502,222 missing values generated)
+
+{com}. format ts_130324_0_0 %td
+{txt}
+{com}. capture drop s_130324_0_0
+{txt}
+{com}. label variable ts_130324_0_0 "Date B88 first reported (other infestations)"
+{txt}
+{com}. gen double ts_130326_0_0 = date(s_130326_0_0,"DMY")
+{txt}(502,405 missing values generated)
+
+{com}. format ts_130326_0_0 %td
+{txt}
+{com}. capture drop s_130326_0_0
+{txt}
+{com}. label variable ts_130326_0_0 "Date B89 first reported (unspecified parasitic disease)"
+{txt}
+{com}. gen double ts_130328_0_0 = date(s_130328_0_0,"DMY")
+{txt}(502,352 missing values generated)
+
+{com}. format ts_130328_0_0 %td
+{txt}
+{com}. capture drop s_130328_0_0
+{txt}
+{com}. label variable ts_130328_0_0 "Date B90 first reported (sequelae of tuberculosis)"
+{txt}
+{com}. gen double ts_130330_0_0 = date(s_130330_0_0,"DMY")
+{txt}(502,166 missing values generated)
+
+{com}. format ts_130330_0_0 %td
+{txt}
+{com}. capture drop s_130330_0_0
+{txt}
+{com}. label variable ts_130330_0_0 "Date B91 first reported (sequelae of poliomyelitis)"
+{txt}
+{com}. gen double ts_130334_0_0 = date(s_130334_0_0,"DMY")
+{txt}(502,241 missing values generated)
+
+{com}. format ts_130334_0_0 %td
+{txt}
+{com}. capture drop s_130334_0_0
+{txt}
+{com}. label variable ts_130334_0_0 "Date B94 first reported (sequelae of other and unspecified infectious and parasitic diseases)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130336_0_0 = date(s_130336_0_0,"DMY")
+{txt}(493,425 missing values generated)
+
+{com}. format ts_130336_0_0 %td
+{txt}
+{com}. capture drop s_130336_0_0
+{txt}
+{com}. label variable ts_130336_0_0 "Date B95 first reported (streptococcus and staphylococcus as the cause of diseases classified to other chapters)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130338_0_0 = date(s_130338_0_0,"DMY")
+{txt}(483,683 missing values generated)
+
+{com}. format ts_130338_0_0 %td
+{txt}
+{com}. capture drop s_130338_0_0
+{txt}
+{com}. label variable ts_130338_0_0 "Date B96 first reported (other bacterial agents as the cause of diseases classified to other chapters)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130340_0_0 = date(s_130340_0_0,"DMY")
+{txt}(498,635 missing values generated)
+
+{com}. format ts_130340_0_0 %td
+{txt}
+{com}. capture drop s_130340_0_0
+{txt}
+{com}. label variable ts_130340_0_0 "Date B97 first reported (viral agents as the cause of diseases classified to other chapters)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130342_0_0 = date(s_130342_0_0,"DMY")
+{txt}(497,674 missing values generated)
+
+{com}. format ts_130342_0_0 %td
+{txt}
+{com}. capture drop s_130342_0_0
+{txt}
+{com}. label variable ts_130342_0_0 "Date B98 first reported (other specified infectious agents as the cause of diseases classified to other chapters)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130344_0_0 = date(s_130344_0_0,"DMY")
+{txt}(501,279 missing values generated)
+
+{com}. format ts_130344_0_0 %td
+{txt}
+{com}. capture drop s_130344_0_0
+{txt}
+{com}. label variable ts_130344_0_0 "Date B99 first reported (other and unspecified infectious diseases)"
+{txt}
+{com}. 
+. ***992 to 1002**
+. gen double ts_130992_0_0 = date(s_130992_0_0,"DMY")
+{txt}(502,174 missing values generated)
+
+{com}. format ts_130992_0_0 %td
+{txt}
+{com}. capture drop s_130992_0_0
+{txt}
+{com}. label variable ts_130992_0_0 "Date G00 first reported (bacterial meningitis, not elsewhere classified)"
+{txt}
+{com}. gen double ts_130994_0_0 = date(s_130994_0_0,"DMY")
+{txt}(502,346 missing values generated)
+
+{com}. format ts_130994_0_0 %td
+{txt}
+{com}. capture drop s_130994_0_0
+{txt}
+{com}. label variable ts_130994_0_0 "Date G01 first reported (meningitis in bacterial diseases classified elsewhere)"
+{txt}
+{com}. gen double ts_130996_0_0 = date(s_130996_0_0,"DMY")
+{txt}(502,310 missing values generated)
+
+{com}. format ts_130996_0_0 %td
+{txt}
+{com}. capture drop s_130996_0_0
+{txt}
+{com}. label variable ts_130996_0_0 "Date G02 first reported (meningitis in other infectious and parasitic diseases classified elsewhere)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_130998_0_0 = date(s_130998_0_0,"DMY")
+{txt}(499,998 missing values generated)
+
+{com}. format ts_130998_0_0 %td
+{txt}
+{com}. capture drop s_130998_0_0
+{txt}
+{com}. label variable ts_130998_0_0 "Date G03 first reported (meningitis due to other and unspecified causes)"
+{txt}
+{com}. gen double ts_131000_0_0 = date(s_131000_0_0,"DMY")
+{txt}(501,546 missing values generated)
+
+{com}. format ts_131000_0_0 %td
+{txt}
+{com}. capture drop s_131000_0_0
+{txt}
+{com}. label variable ts_131000_0_0 "Date G04 first reported (encephalitis, myelitis and encephalomyelitis)"
+{txt}
+{com}. gen double ts_131002_0_0 = date(s_131002_0_0,"DMY")
+{txt}(502,234 missing values generated)
+
+{com}. format ts_131002_0_0 %td
+{txt}
+{com}. capture drop s_131002_0_0
+{txt}
+{com}. label variable ts_131002_0_0 "Date G05 first reported (encephalitis, myelitis and encephalomyelitis in diseases classified elsewhere)"
+{txt}note: label truncated to 80 characters
+
+{com}. 
+. **1424 to 1462***
+. gen double ts_131424_0_0 = date(s_131424_0_0,"DMY")
+{txt}(496,850 missing values generated)
+
+{com}. format ts_131424_0_0 %td
+{txt}
+{com}. capture drop s_131424_0_0
+{txt}
+{com}. label variable ts_131424_0_0 "Date J00 first reported (acute nasopharyngitis [common cold])"
+{txt}
+{com}. gen double ts_131426_0_0 = date(s_131426_0_0,"DMY")
+{txt}(477,789 missing values generated)
+
+{com}. format ts_131426_0_0 %td
+{txt}
+{com}. capture drop s_131426_0_0
+{txt}
+{com}. label variable ts_131426_0_0 "Date J01 first reported (acute sinusitis)"
+{txt}
+{com}. gen double ts_131428_0_0 = date(s_131428_0_0,"DMY")
+{txt}(478,178 missing values generated)
+
+{com}. format ts_131428_0_0 %td
+{txt}
+{com}. capture drop s_131428_0_0
+{txt}
+{com}. label variable ts_131428_0_0 "Date J02 first reported (acute pharyngitis)"
+{txt}
+{com}. gen double ts_131430_0_0 = date(s_131430_0_0,"DMY")
+{txt}(484,794 missing values generated)
+
+{com}. format ts_131430_0_0 %td
+{txt}
+{com}. capture drop s_131430_0_0
+{txt}
+{com}. label variable ts_131430_0_0 "Date J03 first reported (acute tonsillitis)"
+{txt}
+{com}. gen double ts_131432_0_0 = date(s_131432_0_0,"DMY")
+{txt}(497,775 missing values generated)
+
+{com}. format ts_131432_0_0 %td
+{txt}
+{com}. capture drop s_131432_0_0
+{txt}
+{com}. label variable ts_131432_0_0 "Date J04 first reported (acute laryngitis and tracheitis)"
+{txt}
+{com}. gen double ts_131434_0_0 = date(s_131434_0_0,"DMY")
+{txt}(502,226 missing values generated)
+
+{com}. format ts_131434_0_0 %td
+{txt}
+{com}. capture drop s_131434_0_0
+{txt}
+{com}. label variable ts_131434_0_0 "Date J05 first reported (acute obstructive laryngitis [croup] and epiglottitis)"
+{txt}
+{com}. gen double ts_131436_0_0 = date(s_131436_0_0,"DMY")
+{txt}(450,127 missing values generated)
+
+{com}. format ts_131436_0_0 %td
+{txt}
+{com}. capture drop s_131436_0_0
+{txt}
+{com}. label variable ts_131436_0_0 "Date J06 first reported (acute upper respiratory infections of multiple and unspecified sites)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_131438_0_0 = date(s_131438_0_0,"DMY")
+{txt}(502,382 missing values generated)
+
+{com}. format ts_131438_0_0 %td
+{txt}
+{com}. capture drop s_131438_0_0
+{txt}
+{com}. label variable ts_131438_0_0 "Date J09 first reported (influenza due to certain identified influenza virus)"
+{txt}
+{com}. gen double ts_131440_0_0 = date(s_131440_0_0,"DMY")
+{txt}(500,736 missing values generated)
+
+{com}. format ts_131440_0_0 %td
+{txt}
+{com}. capture drop s_131440_0_0
+{txt}
+{com}. label variable ts_131440_0_0 "Date J10 first reported (influenza due to identified influenza virus)"
+{txt}
+{com}. gen double ts_131442_0_0 = date(s_131442_0_0,"DMY")
+{txt}(491,365 missing values generated)
+
+{com}. format ts_131442_0_0 %td
+{txt}
+{com}. capture drop s_131442_0_0
+{txt}
+{com}. label variable ts_131442_0_0 "Date J11 first reported (influenza, virus not identified)"
+{txt}
+{com}. gen double ts_131444_0_0 = date(s_131444_0_0,"DMY")
+{txt}(499,632 missing values generated)
+
+{com}. format ts_131444_0_0 %td
+{txt}
+{com}. capture drop s_131444_0_0
+{txt}
+{com}. label variable ts_131444_0_0 "Date J12 first reported (viral pneumonia, not elsewhere classified)"
+{txt}
+{com}. gen double ts_131446_0_0 = date(s_131446_0_0,"DMY")
+{txt}(501,342 missing values generated)
+
+{com}. format ts_131446_0_0 %td
+{txt}
+{com}. capture drop s_131446_0_0
+{txt}
+{com}. label variable ts_131446_0_0 "Date J13 first reported (pneumonia due to streptococcus pneumoniae)"
+{txt}
+{com}. gen double ts_131448_0_0 = date(s_131448_0_0,"DMY")
+{txt}(502,160 missing values generated)
+
+{com}. format ts_131448_0_0 %td
+{txt}
+{com}. capture drop s_131448_0_0
+{txt}
+{com}. label variable ts_131448_0_0 "Date J14 first reported (pneumonia due to haemophilus influenzae)"
+{txt}
+{com}. gen double ts_131450_0_0 = date(s_131450_0_0,"DMY")
+{txt}(500,863 missing values generated)
+
+{com}. format ts_131450_0_0 %td
+{txt}
+{com}. capture drop s_131450_0_0
+{txt}
+{com}. label variable ts_131450_0_0 "Date J15 first reported (bacterial pneumonia, not elsewhere classified)"
+{txt}
+{com}. gen double ts_131452_0_0 = date(s_131452_0_0,"DMY")
+{txt}(502,314 missing values generated)
+
+{com}. format ts_131452_0_0 %td
+{txt}
+{com}. capture drop s_131452_0_0
+{txt}
+{com}. label variable ts_131452_0_0 "Date J16 first reported (pneumonia due to other infectious organisms, not elsewhere classified)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_131454_0_0 = date(s_131454_0_0,"DMY")
+{txt}(502,034 missing values generated)
+
+{com}. format ts_131454_0_0 %td
+{txt}
+{com}. capture drop s_131454_0_0
+{txt}
+{com}. label variable ts_131454_0_0 "Date J17 first reported (pneumonia in diseases classified elsewhere)"
+{txt}
+{com}. gen double ts_131456_0_0 = date(s_131456_0_0,"DMY")
+{txt}(466,180 missing values generated)
+
+{com}. format ts_131456_0_0 %td
+{txt}
+{com}. capture drop s_131456_0_0
+{txt}
+{com}. label variable ts_131456_0_0 "Date J18 first reported (pneumonia, organism unspecified)"
+{txt}
+{com}. gen double ts_131458_0_0 = date(s_131458_0_0,"DMY")
+{txt}(496,910 missing values generated)
+
+{com}. format ts_131458_0_0 %td
+{txt}
+{com}. capture drop s_131458_0_0
+{txt}
+{com}. label variable ts_131458_0_0 "Date J20 first reported (acute bronchitis)"
+{txt}
+{com}. gen double ts_131460_0_0 = date(s_131460_0_0,"DMY")
+{txt}(502,234 missing values generated)
+
+{com}. format ts_131460_0_0 %td
+{txt}
+{com}. capture drop s_131460_0_0
+{txt}
+{com}. label variable ts_131460_0_0 "Date J21 first reported (acute bronchiolitis)"
+{txt}
+{com}. gen double ts_131462_0_0 = date(s_131462_0_0,"DMY")
+{txt}(437,667 missing values generated)
+
+{com}. format ts_131462_0_0 %td
+{txt}
+{com}. capture drop s_131462_0_0
+{txt}
+{com}. label variable ts_131462_0_0 "Date J22 first reported (unspecified acute lower respiratory infection)"
+{txt}
+{com}. 
+. ****************1696 to 1708************
+. gen double ts_131696_0_0 = date(s_131696_0_0,"DMY")
+{txt}(502,399 missing values generated)
+
+{com}. format ts_131696_0_0 %td
+{txt}
+{com}. capture drop s_131696_0_0
+{txt}
+{com}. label variable ts_131696_0_0 "Date L00 first reported (staphylococcal scalded skin syndrome)"
+{txt}
+{com}. gen double ts_131698_0_0 = date(s_131698_0_0,"DMY")
+{txt}(500,914 missing values generated)
+
+{com}. format ts_131698_0_0 %td
+{txt}
+{com}. capture drop s_131698_0_0
+{txt}
+{com}. label variable ts_131698_0_0 "Date L01 first reported (impetigo)"
+{txt}
+{com}. gen double ts_131700_0_0 = date(s_131700_0_0,"DMY")
+{txt}(489,477 missing values generated)
+
+{com}. format ts_131700_0_0 %td
+{txt}
+{com}. capture drop s_131700_0_0
+{txt}
+{com}. label variable ts_131700_0_0 "Date L02 first reported (cutaneous abscess, furuncle and carbuncle)"
+{txt}
+{com}. gen double ts_131702_0_0 = date(s_131702_0_0,"DMY")
+{txt}(469,331 missing values generated)
+
+{com}. format ts_131702_0_0 %td
+{txt}
+{com}. capture drop s_131702_0_0
+{txt}
+{com}. label variable ts_131702_0_0 "Date L03 first reported (cellulitis)"
+{txt}
+{com}. gen double ts_131704_0_0 = date(s_131704_0_0,"DMY")
+{txt}(501,621 missing values generated)
+
+{com}. format ts_131704_0_0 %td
+{txt}
+{com}. capture drop s_131704_0_0
+{txt}
+{com}. label variable ts_131704_0_0 "Date L04 first reported (acute lymphadenitis)"
+{txt}
+{com}. gen double ts_131706_0_0 = date(s_131706_0_0,"DMY")
+{txt}(500,785 missing values generated)
+
+{com}. format ts_131706_0_0 %td
+{txt}
+{com}. capture drop s_131706_0_0
+{txt}
+{com}. label variable ts_131706_0_0 "Date L05 first reported (pilonidal cyst)"
+{txt}
+{com}. gen double ts_131708_0_0 = date(s_131708_0_0,"DMY")
+{txt}(486,718 missing values generated)
+
+{com}. format ts_131708_0_0 %td
+{txt}
+{com}. capture drop s_131708_0_0
+{txt}
+{com}. label variable ts_131708_0_0 "Date L08 first reported (other local infections of skin and subcutaneous tissue)"
+{txt}
+{com}. 
+. 
+. **(1840 1842 2054 2070 2074 2098 2108 2110)**
+. gen double ts_131840_0_0 = date(s_131840_0_0,"DMY")
+{txt}(501,449 missing values generated)
+
+{com}. format ts_131840_0_0 %td
+{txt}
+{com}. capture drop s_131840_0_0
+{txt}
+{com}. label variable ts_131840_0_0 "Date M00 first reported (pyogenic arthritis)"
+{txt}
+{com}. gen double ts_131842_0_0 = date(s_131842_0_0,"DMY")
+{txt}(502,371 missing values generated)
+
+{com}. format ts_131842_0_0 %td
+{txt}
+{com}. capture drop s_131842_0_0
+{txt}
+{com}. label variable ts_131842_0_0 "Date M01 first reported (direct infections of joint in infectious and parasitic diseases classified elsewhere)"
+{txt}note: label truncated to 80 characters
+
+{com}. gen double ts_132054_0_0 = date(s_132054_0_0,"DMY")
+{txt}(483,689 missing values generated)
+
+{com}. format ts_132054_0_0 %td
+{txt}
+{com}. capture drop s_132054_0_0
+{txt}
+{com}. label variable ts_132054_0_0 "Date N30 first reported (cystitis)"
+{txt}
+{com}. gen double ts_132070_0_0 = date(s_132070_0_0,"DMY")
+{txt}(445,702 missing values generated)
+
+{com}. format ts_132070_0_0 %td
+{txt}
+{com}. capture drop s_132070_0_0
+{txt}
+{com}. label variable ts_132070_0_0 "Date N39 first reported (other disorders of urinary system)"
+{txt}
+{com}. gen double ts_132074_0_0 = date(s_132074_0_0,"DMY")
+{txt}(497,567 missing values generated)
+
+{com}. format ts_132074_0_0 %td
+{txt}
+{com}. capture drop s_132074_0_0
+{txt}
+{com}. label variable ts_132074_0_0 "Date N41 first reported (inflammatory diseases of prostate)"
+{txt}
+{com}. gen double ts_132098_0_0 = date(s_132098_0_0,"DMY")
+{txt}(500,362 missing values generated)
+
+{com}. format ts_132098_0_0 %td
+{txt}
+{com}. capture drop s_132098_0_0
+{txt}
+{com}. label variable ts_132098_0_0 "Date N61 first reported (inflammatory disorders of breast)"
+{txt}
+{com}. gen double ts_132108_0_0 = date(s_132108_0_0,"DMY")
+{txt}(501,843 missing values generated)
+
+{com}. format ts_132108_0_0 %td
+{txt}
+{com}. capture drop s_132108_0_0
+{txt}
+{com}. label variable ts_132108_0_0 "Date N71 first reported (inflammatory disease of uterus, except cervix)"
+{txt}
+{com}. gen double ts_132110_0_0 = date(s_132110_0_0,"DMY")
+{txt}(500,276 missing values generated)
+
+{com}. format ts_132110_0_0 %td
+{txt}
+{com}. capture drop s_132110_0_0
+{txt}
+{com}. label variable ts_132110_0_0 "Date N72 first reported (inflammatory disease of cervix uteri)"
+{txt}
+{com}. 
+. ************DENTAL PROBLEMS DIAGNOSES************************
+. 
+. **131556        Date K02 first reported (dental caries) Digestive system disorders  
+. **131557        Source of report of K02 (dental caries) Digestive system disorders  
+. 
+. 
+. **131560        Date K04 first reported (diseases of pulp and periapical tissues)       Digestive system disorders  
+. **131561        Source of report of K04 (diseases of pulp and periapical tissues)       Digestive system disorders  
+. 
+. **131562        Date K05 first reported (gingivitis and periodontal diseases)   Digestive system disorders  
+. **131563        Source of report of K05 (gingivitis and periodontal diseases)   Digestive system disorders  
+. 
+. capture drop tsd_131556_0_0
+{txt}
+{com}. gen double tsd_131556_0_0 = date(s_131556_0_0,"DMY")
+{txt}(496,131 missing values generated)
+
+{com}. format tsd_131556_0_0 %td
+{txt}
+{com}. capture drop s_131556_0_0
+{txt}
+{com}. label variable tsd_131556_0_0 "Date K02 first reported (dental caries)"
+{txt}
+{com}. 
+. capture drop tsd_131560_0_0
+{txt}
+{com}. gen double tsd_131560_0_0 = date(s_131560_0_0,"DMY")
+{txt}(493,990 missing values generated)
+
+{com}. format tsd_131560_0_0 %td
+{txt}
+{com}. capture drop s_131560_0_0
+{txt}
+{com}. label variable tsd_131560_0_0 "Date K04 first reported (diseases of pulp and periapical tissues)"
+{txt}
+{com}. 
+. 
+. capture drop tsd_131562_0_0
+{txt}
+{com}. gen double tsd_131562_0_0 = date(s_131562_0_0,"DMY")
+{txt}(500,245 missing values generated)
+
+{com}. format tsd_131562_0_0 %td
+{txt}
+{com}. capture drop s_131562_0_0
+{txt}
+{com}. label variable tsd_131562_0_0 "Date K05 first reported (gingivitis and periodontal diseases)"
+{txt}
+{com}. 
+. 
+. su ts_53_*_0 ts_40000_0_0 ts_40000_1_0 ts_42018_0_0 ts_42020_0_0 ts*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}ts_53_0_0 {c |}{res}    502,389    17919.51    313.8655      16873      18536
+{txt}{space 3}ts_53_2_0 {c |}{res}     56,013     21374.8     727.307      19583      22839
+{txt}ts_40000_0_0 {c |}{res}     37,897    20779.72    1271.291      16931      22596
+{txt}ts_40000_1_0 {c |}{res}         60    19851.58    441.4507      18992      20443
+{txt}ts_42018_0_0 {c |}{res}      7,896    21062.24    1685.022     -21914      22590
+{txt}{hline 13}{c +}{hline 57}
+ts_42020_0_0 {c |}{res}      3,290    21258.79     1019.77      16033      22590
+{txt}{space 3}ts_53_0_0 {c |}{res}    502,389    17919.51    313.8655      16873      18536
+{txt}{space 3}ts_53_2_0 {c |}{res}     56,013     21374.8     727.307      19583      22839
+{txt}ts_40000_0_0 {c |}{res}     37,897    20779.72    1271.291      16931      22596
+{txt}ts_40000_1_0 {c |}{res}         60    19851.58    441.4507      18992      20443
+{txt}{hline 13}{c +}{hline 57}
+ts_42018_0_0 {c |}{res}      7,896    21062.24    1685.022     -21914      22590
+{txt}ts_42020_0_0 {c |}{res}      3,290    21258.79     1019.77      16033      22590
+{txt}ts_42030_0_0 {c |}{res}      4,192    19872.56    2480.417       3470      22562
+{txt}ts_42032_0_0 {c |}{res}      3,807    19805.55    2528.998       3470      22562
+{txt}ts_130000_~0 {c |}{res}         26    12849.08    5461.934      -4748      20703
+{txt}{hline 13}{c +}{hline 57}
+ts_130002_~0 {c |}{res}        161    5342.832    10432.35     -21152      21962
+{txt}ts_130004_~0 {c |}{res}        796    13353.63    5294.813     -20758      22537
+{txt}ts_130006_~0 {c |}{res}        212    8801.066    7469.934     -20758      21892
+{txt}ts_130008_~0 {c |}{res}      8,421     17856.8    2917.071     -21152      22555
+{txt}ts_130010_~0 {c |}{res}        403     16358.3    3866.797      -1038      22534
+{txt}{hline 13}{c +}{hline 57}
+ts_130012_~0 {c |}{res}        118    13660.95    5333.713      -2042      21739
+{txt}ts_130014_~0 {c |}{res}        508    15202.52    4188.097      -1095      22415
+{txt}ts_130016_~0 {c |}{res}      5,610    18616.02    2269.641      -1399      22551
+{txt}ts_130018_~0 {c |}{res}     24,546    19590.07    3075.803     -20758      22705
+{txt}ts_130020_~0 {c |}{res}      2,714    2110.272    6535.957      -7854      22459
+{txt}{hline 13}{c +}{hline 57}
+ts_130022_~0 {c |}{res}        671    8653.019    8834.815      -5844      22490
+{txt}ts_130024_~0 {c |}{res}         22    17372.45    2826.663       9044      20912
+{txt}ts_130026_~0 {c |}{res}        196    13200.92    7508.427      -6209      22497
+{txt}ts_130028_~0 {c |}{res}         28    15842.32    7950.982      -3991      22544
+{txt}ts_130030_~0 {c |}{res}          8       16831    5321.303       7305      21726
+{txt}{hline 13}{c +}{hline 57}
+ts_130034_~0 {c |}{res}          2       17622    2638.923      15756      19488
+{txt}ts_130036_~0 {c |}{res}         33    6706.212    5714.926      -1095      21374
+{txt}ts_130038_~0 {c |}{res}          1       20383           .      20383      20383
+{txt}ts_130040_~0 {c |}{res}          3       14134    4169.265      10611      18737
+{txt}ts_130042_~0 {c |}{res}         13    15476.62    6319.617      -1979      21812
+{txt}{hline 13}{c +}{hline 57}
+ts_130044_~0 {c |}{res}         35    17328.54    4432.275       6885      22022
+{txt}ts_130046_~0 {c |}{res}         65    17613.69    5098.295      -2123      22474
+{txt}ts_130048_~0 {c |}{res}          3    13851.33     6166.05       7671      20003
+{txt}ts_130050_~0 {c |}{res}        160    19441.19    2948.924       2919      22537
+{txt}ts_130052_~0 {c |}{res}         27    20068.04    2346.194      10562      22370
+{txt}{hline 13}{c +}{hline 57}
+ts_130054_~0 {c |}{res}          1        9132           .       9132       9132
+{txt}ts_130058_~0 {c |}{res}        119    13333.87    2856.618       1313      21321
+{txt}ts_130060_~0 {c |}{res}        147    1968.415    9475.984      -7123      21916
+{txt}ts_130062_~0 {c |}{res}      2,495    146.3772    6895.109     -20758      22097
+{txt}ts_130064_~0 {c |}{res}      1,528        -446    4043.163     -20758      22097
+{txt}{hline 13}{c +}{hline 57}
+ts_130066_~0 {c |}{res}        117    15564.94    6307.914     -20758      22259
+{txt}ts_130068_~0 {c |}{res}        815    20087.51    2076.845       9813      22543
+{txt}ts_130070_~0 {c |}{res}     15,906    20301.27    2505.758      -6028      22572
+{txt}ts_130072_~0 {c |}{res}        219    16648.46    3215.863       5500      22168
+{txt}ts_130074_~0 {c |}{res}          3       14783    3998.261      12036      19370
+{txt}{hline 13}{c +}{hline 57}
+ts_130076_~0 {c |}{res}          1       18010           .      18010      18010
+{txt}ts_130078_~0 {c |}{res}        328    17157.56    2908.296       6009      22510
+{txt}ts_130080_~0 {c |}{res}        204    17492.54    3053.231       8316      22553
+{txt}ts_130082_~0 {c |}{res}      2,885    19288.17    3017.541       2922      22547
+{txt}ts_130084_~0 {c |}{res}          9    7427.778    11984.24     -21152      19663
+{txt}{hline 13}{c +}{hline 57}
+ts_130086_~0 {c |}{res}         20    14429.75    5653.087       2637      20264
+{txt}ts_130088_~0 {c |}{res}         21    16216.62    2226.648      10374      20198
+{txt}ts_130090_~0 {c |}{res}         30     13347.7    5545.541       1461      21456
+{txt}ts_130092_~0 {c |}{res}        282     7739.39    4296.662      -3805      19303
+{txt}ts_130094_~0 {c |}{res}          4     15565.5    5162.411       8397      20678
+{txt}{hline 13}{c +}{hline 57}
+ts_130096_~0 {c |}{res}         84     13453.9     3115.74       7671      19099
+{txt}ts_130100_~0 {c |}{res}          2     14342.5    108.1873      14266      14419
+{txt}ts_130102_~0 {c |}{res}         90    10577.42    4206.233          0      20689
+{txt}ts_130104_~0 {c |}{res}        446    13850.41    4079.353       4749      20877
+{txt}ts_130106_~0 {c |}{res}      1,846    12085.29    4442.444     -21152      22070
+{txt}{hline 13}{c +}{hline 57}
+ts_130108_~0 {c |}{res}          3       17430    1704.116      15531      18826
+{txt}ts_130112_~0 {c |}{res}         24    15935.54    4486.111       1096      22446
+{txt}ts_130114_~0 {c |}{res}          6       18261    1416.144      16196      20244
+{txt}ts_130116_~0 {c |}{res}          2       16288    2126.977      14784      17792
+{txt}ts_130118_~0 {c |}{res}        320    17611.69    3336.851      -4201      22536
+{txt}{hline 13}{c +}{hline 57}
+ts_130120_~0 {c |}{res}         32    14534.47    3387.214       9132      20909
+{txt}ts_130122_~0 {c |}{res}         35    13137.37    2342.509       7671      20419
+{txt}ts_130124_~0 {c |}{res}         37     12778.7    4010.795       4930      21528
+{txt}ts_130126_~0 {c |}{res}          5     18178.4    2278.855      16039      21353
+{txt}ts_130128_~0 {c |}{res}         21    17561.95    2673.903      12009      21930
+{txt}{hline 13}{c +}{hline 57}
+ts_130130_~0 {c |}{res}         10     13930.1    6272.564      -1826      20768
+{txt}ts_130132_~0 {c |}{res}          2     16474.5     2018.79      15047      17902
+{txt}ts_130134_~0 {c |}{res}        521   -1189.593    5309.439     -21152      22205
+{txt}ts_130136_~0 {c |}{res}         67    19974.57     2016.85      12593      22429
+{txt}ts_130138_~0 {c |}{res}         18    19830.39    846.3665      17918      20527
+{txt}{hline 13}{c +}{hline 57}
+ts_130140_~0 {c |}{res}         33    15140.12    3343.895       5479      20740
+{txt}ts_130142_~0 {c |}{res}          8     16162.5     5058.59       4383      20700
+{txt}ts_130144_~0 {c |}{res}         15    16486.33    4660.807       9072      22031
+{txt}ts_130146_~0 {c |}{res}        136    18831.75    4166.122      -1997      22475
+{txt}ts_130148_~0 {c |}{res}        511    11622.75    6606.547     -20758      22376
+{txt}{hline 13}{c +}{hline 57}
+ts_130150_~0 {c |}{res}         27    11138.15    7317.876      -1826      22473
+{txt}ts_130152_~0 {c |}{res}         38    14575.97    4606.202       1827      21883
+{txt}ts_130154_~0 {c |}{res}         55    13779.76     5858.25       1643      21264
+{txt}ts_130156_~0 {c |}{res}          2     18125.5    2884.289      16086      20165
+{txt}ts_130158_~0 {c |}{res}         14    17664.86     3309.49       9497      20396
+{txt}{hline 13}{c +}{hline 57}
+ts_130160_~0 {c |}{res}          9    16509.22    2365.157      11323      19105
+{txt}ts_130162_~0 {c |}{res}          4    19026.75     1347.21      17056      20101
+{txt}ts_130164_~0 {c |}{res}         74     11358.3    6465.175      -4901      21559
+{txt}ts_130168_~0 {c |}{res}         35    15982.86    4265.399       3288      21833
+{txt}ts_130170_~0 {c |}{res}          1       16673           .      16673      16673
+{txt}{hline 13}{c +}{hline 57}
+ts_130174_~0 {c |}{res}      4,920    15460.88    4473.023      -5662      22533
+{txt}ts_130176_~0 {c |}{res}     15,288    2677.409    5655.865     -21152      22519
+{txt}ts_130178_~0 {c |}{res}     17,937    17109.45    3611.372      -5113      22736
+{txt}ts_130180_~0 {c |}{res}         14    6290.714    5810.231      -2191      19786
+{txt}ts_130184_~0 {c |}{res}     10,854    16.06403    3053.927     -21152      22468
+{txt}{hline 13}{c +}{hline 57}
+ts_130186_~0 {c |}{res}      4,136    1769.418    4060.956     -21152      20933
+{txt}ts_130188_~0 {c |}{res}     17,823    16264.97    3568.961     -21152      22547
+{txt}ts_130190_~0 {c |}{res}      1,048    14754.16      4745.2     -20758      22333
+{txt}ts_130192_~0 {c |}{res}         30    16276.57    3826.683      11844      22134
+{txt}ts_130194_~0 {c |}{res}      1,121    7873.337    6206.755     -21152      22510
+{txt}{hline 13}{c +}{hline 57}
+ts_130196_~0 {c |}{res}        416    12946.83    5540.795      -4201      22531
+{txt}ts_130198_~0 {c |}{res}        457    16266.97    4655.573      -2556      22526
+{txt}ts_130200_~0 {c |}{res}        878    18380.69    2631.508       4018      22536
+{txt}ts_130202_~0 {c |}{res}      1,348    7963.729     5829.59      -5235      22524
+{txt}ts_130204_~0 {c |}{res}         70    16651.21    1704.535      13595      22204
+{txt}{hline 13}{c +}{hline 57}
+ts_130206_~0 {c |}{res}         16     16245.5    1562.363      13611      19791
+{txt}ts_130208_~0 {c |}{res}         12    15929.58    1982.502      13718      19875
+{txt}ts_130210_~0 {c |}{res}         40    16342.35    1424.799      12054      19010
+{txt}ts_130212_~0 {c |}{res}        518    14408.97    2932.859      -1645      22311
+{txt}ts_130214_~0 {c |}{res}        300    19040.48    2559.826       7305      22526
+{txt}{hline 13}{c +}{hline 57}
+ts_130216_~0 {c |}{res}      7,043    1413.529    4225.474     -20758      22320
+{txt}ts_130218_~0 {c |}{res}      3,462    7276.918    5029.277      -7245      22389
+{txt}ts_130220_~0 {c |}{res}        208    17286.09    2692.207       4808      22424
+{txt}ts_130222_~0 {c |}{res}        240    14848.08    4085.247       1378      22489
+{txt}ts_130224_~0 {c |}{res}     12,151    17462.52    2974.883     -21152      22550
+{txt}{hline 13}{c +}{hline 57}
+ts_130226_~0 {c |}{res}     33,070    16830.97    2593.945     -21152      22530
+{txt}ts_130228_~0 {c |}{res}      5,871    17321.78    2877.517     -21152      22525
+{txt}ts_130230_~0 {c |}{res}     12,628    18377.16    3115.908     -21152      22553
+{txt}ts_130232_~0 {c |}{res}          4     21062.5     1274.08      19172      21948
+{txt}ts_130234_~0 {c |}{res}          9    16631.11    3754.989       8432      20701
+{txt}{hline 13}{c +}{hline 57}
+ts_130236_~0 {c |}{res}          1       13850           .      13850      13850
+{txt}ts_130240_~0 {c |}{res}          2       20181    258.8011      19998      20364
+{txt}ts_130242_~0 {c |}{res}          4    19533.75     2323.46      17136      22124
+{txt}ts_130244_~0 {c |}{res}        462    19189.15    2972.487       1096      22574
+{txt}ts_130246_~0 {c |}{res}          8     18570.5    1541.125      16904      20987
+{txt}{hline 13}{c +}{hline 57}
+ts_130248_~0 {c |}{res}          4    19151.25    1881.594      17940      21951
+{txt}ts_130250_~0 {c |}{res}         25    19452.12    2557.618      12616      22412
+{txt}ts_130252_~0 {c |}{res}         30     16432.3    4207.192       4383      22013
+{txt}ts_130254_~0 {c |}{res}        533    19612.53     1796.48       3772      22544
+{txt}ts_130256_~0 {c |}{res}        194    16874.08    3434.463       2727      22476
+{txt}{hline 13}{c +}{hline 57}
+ts_130258_~0 {c |}{res}         43    13114.65    4431.881       5701      22268
+{txt}ts_130260_~0 {c |}{res}          5     16989.8    1957.594      14776      19627
+{txt}ts_130262_~0 {c |}{res}          5     16840.6    4139.638      11415      21783
+{txt}ts_130264_~0 {c |}{res}        898    8022.427    6153.918     -20758      21877
+{txt}ts_130266_~0 {c |}{res}         17       17681    3166.557      12054      21895
+{txt}{hline 13}{c +}{hline 57}
+ts_130270_~0 {c |}{res}          1       14082           .      14082      14082
+{txt}ts_130272_~0 {c |}{res}         63     14939.4    5426.265      -2556      22337
+{txt}ts_130274_~0 {c |}{res}        181    20442.26    1581.571      13956      22526
+{txt}ts_130276_~0 {c |}{res}         14    19202.71    2842.077      13402      22293
+{txt}ts_130280_~0 {c |}{res}        111    12229.77    7162.976      -2191      21366
+{txt}{hline 13}{c +}{hline 57}
+ts_130282_~0 {c |}{res}          7    17429.29    3990.509      11688      22481
+{txt}ts_130284_~0 {c |}{res}         12    17352.92    3341.036       8766      21905
+{txt}ts_130286_~0 {c |}{res}         12    15596.08    3569.119      10227      21950
+{txt}ts_130288_~0 {c |}{res}          6    17178.17    2921.331      12827      20117
+{txt}ts_130292_~0 {c |}{res}         14    12198.14    8164.817      -1857      21385
+{txt}{hline 13}{c +}{hline 57}
+ts_130296_~0 {c |}{res}         17    14079.29    4778.605       1827      18723
+{txt}ts_130298_~0 {c |}{res}          4    14434.75    4247.736       8401      18051
+{txt}ts_130300_~0 {c |}{res}          1       15342           .      15342      15342
+{txt}ts_130302_~0 {c |}{res}         33    15339.27    3771.745       6210      20776
+{txt}ts_130304_~0 {c |}{res}         12    15342.25    4376.471       8766      22164
+{txt}{hline 13}{c +}{hline 57}
+ts_130306_~0 {c |}{res}          8    14896.38    5377.315       5325      21577
+{txt}ts_130308_~0 {c |}{res}          5     14602.4    8841.365       2776      21818
+{txt}ts_130310_~0 {c |}{res}        774    15585.93     4141.21      -3914      22524
+{txt}ts_130312_~0 {c |}{res}         17    14071.59    5076.572        366      20789
+{txt}ts_130314_~0 {c |}{res}         96    18178.82    2765.595       2703      22141
+{txt}{hline 13}{c +}{hline 57}
+ts_130316_~0 {c |}{res}         85     14195.8    3566.988        266      22187
+{txt}ts_130318_~0 {c |}{res}        339    15372.17    2988.162       2201      22424
+{txt}ts_130320_~0 {c |}{res}      2,458    15273.77        3881      -3723      22467
+{txt}ts_130322_~0 {c |}{res}          9    18514.67    2917.672      12784      22165
+{txt}ts_130324_~0 {c |}{res}        187    13834.48     2955.71       4383      22383
+{txt}{hline 13}{c +}{hline 57}
+ts_130326_~0 {c |}{res}          4     18350.5    2149.242      15522      20551
+{txt}ts_130328_~0 {c |}{res}         57    18699.25    3192.744       6575      22538
+{txt}ts_130330_~0 {c |}{res}        243    18170.37    2914.441       2954      22529
+{txt}ts_130334_~0 {c |}{res}        168    20007.37    2675.186        731      22544
+{txt}ts_130336_~0 {c |}{res}      8,984    19225.73     2413.04       -730      22543
+{txt}{hline 13}{c +}{hline 57}
+ts_130338_~0 {c |}{res}     18,726    19168.62     2402.01       4749      22551
+{txt}ts_130340_~0 {c |}{res}      3,774    21136.26    2221.616       3052      22551
+{txt}ts_130342_~0 {c |}{res}      4,735    18843.38    3159.624      -5174      22553
+{txt}ts_130344_~0 {c |}{res}      1,130    18570.56    3729.375      -2820      22539
+{txt}ts_130992_~0 {c |}{res}        235    16308.69     6961.94     -20758      22482
+{txt}{hline 13}{c +}{hline 57}
+ts_130994_~0 {c |}{res}         63    17835.87    2716.986      11073      22370
+{txt}ts_130996_~0 {c |}{res}         99    13691.95    7058.694      -4383      22519
+{txt}ts_130998_~0 {c |}{res}      2,411    6006.123    7453.914     -20758      22456
+{txt}ts_131000_~0 {c |}{res}        863    14210.24    7347.264     -20758      22525
+{txt}ts_131002_~0 {c |}{res}        175    16323.09    6362.802      -6819      22459
+{txt}{hline 13}{c +}{hline 57}
+ts_131424_~0 {c |}{res}      5,559    16475.85    3032.362      -3077      22553
+{txt}ts_131426_~0 {c |}{res}     24,620    15972.73    2831.513     -21152      22540
+{txt}ts_131428_~0 {c |}{res}     24,231    15828.59     3026.75     -20758      22529
+{txt}ts_131430_~0 {c |}{res}     17,615    9254.735    7866.173     -21152      22552
+{txt}ts_131432_~0 {c |}{res}      4,634     16133.7     2897.06      -3329      22534
+{txt}{hline 13}{c +}{hline 57}
+ts_131434_~0 {c |}{res}        183    17643.36    3909.301        366      22533
+{txt}ts_131436_~0 {c |}{res}     52,282    16917.46    2808.208     -21152      22548
+{txt}ts_131438_~0 {c |}{res}         27    20422.37    981.0178      18187      21957
+{txt}ts_131440_~0 {c |}{res}      1,673    20691.44    1303.099      13748      22445
+{txt}ts_131442_~0 {c |}{res}     11,044    15964.78    3010.285     -21152      21999
+{txt}{hline 13}{c +}{hline 57}
+ts_131444_~0 {c |}{res}      2,777    21686.34    2547.393      -6209      22555
+{txt}ts_131446_~0 {c |}{res}      1,067    15961.53    6218.533      -6209      22540
+{txt}ts_131448_~0 {c |}{res}        249    19838.97    1983.645      13893      22484
+{txt}ts_131450_~0 {c |}{res}      1,546    18760.28     4013.87     -20758      22552
+{txt}ts_131452_~0 {c |}{res}         95    15951.59    6256.423      -2191      22536
+{txt}{hline 13}{c +}{hline 57}
+ts_131454_~0 {c |}{res}        375    19726.81    2078.551       9497      22552
+{txt}ts_131456_~0 {c |}{res}     36,229    16816.77    7469.012     -21152      22564
+{txt}ts_131458_~0 {c |}{res}      5,499    16076.41    3707.387     -21152      22535
+{txt}ts_131460_~0 {c |}{res}        175    16514.13    8849.084     -21152      22463
+{txt}ts_131462_~0 {c |}{res}     64,742    17763.53    2623.018     -20758      22566
+{txt}{hline 13}{c +}{hline 57}
+ts_131696_~0 {c |}{res}         10     13564.8    7339.589      -2497      20464
+{txt}ts_131698_~0 {c |}{res}      1,495    16465.54    3693.316     -20758      22527
+{txt}ts_131700_~0 {c |}{res}     12,932    17198.56    3344.826     -21152      22550
+{txt}ts_131702_~0 {c |}{res}     33,078    18097.59    2804.482     -21152      22553
+{txt}ts_131704_~0 {c |}{res}        788    13707.79    5604.209     -20758      22518
+{txt}{hline 13}{c +}{hline 57}
+ts_131706_~0 {c |}{res}      1,624    14065.62    5215.394     -20758      22543
+{txt}ts_131708_~0 {c |}{res}     15,691     17672.2    2719.665     -20758      22543
+{txt}ts_131840_~0 {c |}{res}        960    18579.13    3502.762      -3653      22543
+{txt}ts_131842_~0 {c |}{res}         38    15875.24    3999.741       3368      21120
+{txt}ts_132054_~0 {c |}{res}     18,720    16668.49    3615.794     -21152      22551
+{txt}{hline 13}{c +}{hline 57}
+ts_132070_~0 {c |}{res}     56,707     17392.3    3831.761     -21152      22736
+{txt}ts_132074_~0 {c |}{res}      4,842    17666.63    3423.071      -1461      22551
+{txt}ts_132098_~0 {c |}{res}      2,047    14986.36    4072.939      -1461      22546
+{txt}ts_132108_~0 {c |}{res}        566    16265.08    3316.153       1568      22519
+{txt}ts_132110_~0 {c |}{res}      2,133    14820.45    3892.013      -3651      22518
+{txt}{hline 13}{c +}{hline 57}
+tsd_131556~0 {c |}{res}      6,278    18790.64    2394.989      -2775      22552
+{txt}tsd_131560~0 {c |}{res}      8,419    17228.98    2822.465      -3287      22540
+{txt}tsd_131562~0 {c |}{res}      2,164    17663.98    3075.287      -4593      22537
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}
