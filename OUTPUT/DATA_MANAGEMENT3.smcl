@@ -1,0 +1,2932 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. 
+. //STEP 12A: GENERATE AD/DEMENTIA AND RELATED TIME VARIABLES//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized", clear
+{txt}
+{com}. 
+. keep n_eid n_21022_0_0 n_20009_0_* n_20002_0_* s_41202_0_* n_34_0_0 n_52_0_0 ts_53_0_0 ts_40000_*_0  n_40007_*_0  ts_42018_0_0 ts_42020_0_0 
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. **DEMENTIA AND ALZHEIMER'S DISEASE, INCIDENT CASES AND DATE OF INCIDENCE**
+. 
+. **https://biobank.ctsu.ox.ac.uk/crystal/search.cgi?wot=0&srch=dementia&sta0=on&sta1=on&sta2=on&sta3=on&str0=on&str3=on&fit0=on&fit10=on&fit20=on&fit30=on&fvt11=on&fvt21=on&fvt22=on&fvt31=on&fvt41=on&fvt51=on&fvt61=on&fvt101=on&yfirst=2000&ylast=2021
+. 
+. **Main resource: algorithmically defined outcomes: 
+. **https://biobank.ctsu.ox.ac.uk/crystal/ukb/docs/alg_outcome_main.pdf**: pages 14-15
+. 
+. 
+. **Field ID      Description     Category
+. 
+. **42018 Date of all cause dementia report       Dementia outcomes  
+. **42024 Date of frontotemporal dementia report  Dementia outcomes  
+. **42022 Date of vascular dementia report        Dementia outcomes  
+. **42019 Source of all cause dementia report     Dementia outcomes  
+. **42025 Source of frontotemporal dementia report        Dementia outcomes  
+. **42023 Source of vascular dementia report      Dementia outcomes  
+. 
+. 
+. **Field ID      Description     Category
+. **20009 Interpolated Age of participant when non-cancer illness first diagnosed Medical conditions  
+. **40007 Age at death    Death register  
+. 
+. 
+. **Field ID      Description     Category
+. **42020         Date of alzheimer's disease report      Dementia outcomes  (**https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=42020)
+. **42021         Source of alzheimer's disease report    Dementia outcomes  
+. 
+. /////////////////////////////////////////////////////////////////////////////////////////////////
+> ***Field 20002: https://biobank.ctsu.ox.ac.uk/crystal/coding.cgi?id=6
+. ***Field 20009: https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=20009
+. 
+. *Years of Birth*
+. capture drop birthyear
+{txt}
+{com}. gen birthyear=n_34_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Month of Birth*
+. capture drop birthmonth
+{txt}
+{com}. gen birthmonth=n_52_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Date of birth*
+. capture drop birthdate
+{txt}
+{com}. gen birthdate=mdy(birthmonth,14,birthyear)
+{txt}(23 missing values generated)
+
+{com}. 
+. *Baseline Cohort Start Date*
+. capture drop startdate
+{txt}
+{com}. gen startdate=ts_53_0_0 
+{txt}(20 missing values generated)
+
+{com}. format startdate %d
+{txt}
+{com}. 
+. *Baseline age**
+. capture drop baselineage
+{txt}
+{com}. gen baselineage=(startdate-birthdate)/365.25
+{txt}(23 missing values generated)
+
+{com}. 
+. 
+. **Prior dementia**
+. forval i = 0/28 {c -(}
+{txt}  2{com}. replace n_20009_0_`i' = . if n_20009_0_`i' < 0
+{txt}  3{com}. {c )-}
+{txt}(15,330 real changes made, 15,330 to missing)
+(7,107 real changes made, 7,107 to missing)
+(4,261 real changes made, 4,261 to missing)
+(2,494 real changes made, 2,494 to missing)
+(1,435 real changes made, 1,435 to missing)
+(811 real changes made, 811 to missing)
+(474 real changes made, 474 to missing)
+(236 real changes made, 236 to missing)
+(153 real changes made, 153 to missing)
+(91 real changes made, 91 to missing)
+(36 real changes made, 36 to missing)
+(23 real changes made, 23 to missing)
+(18 real changes made, 18 to missing)
+(14 real changes made, 14 to missing)
+(6 real changes made, 6 to missing)
+(1 real change made, 1 to missing)
+(3 real changes made, 3 to missing)
+(0 real changes made)
+(2 real changes made, 2 to missing)
+(0 real changes made)
+(1 real change made, 1 to missing)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+. gen dem = 0
+{txt}
+{com}. gen agedem = .
+{txt}(502,409 missing values generated)
+
+{com}. forval i=0/28 {c -(}
+{txt}  2{com}. replace dem = 1 if n_20002_0_`i' == 1263
+{txt}  3{com}.         forval k=0/28 {c -(}
+{txt}  4{com}.         replace agedem = n_20009_0_`k' if dem == 1 & n_20009_0_`k' < n_20009_0_`k-1'
+{txt}  5{com}.         {c )-}
+{txt}  6{com}. {c )-}
+{txt}(39 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(40 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(26 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(11 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(1 real change made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(1 real change made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+{com}. 
+. capture drop dem
+{txt}
+{com}. capture drop priordem 
+{txt}
+{com}. gen priordem = 1 if agedem < baselineage 
+{txt}(502,409 missing values generated)
+
+{com}. recode priordem .=0 
+{txt}(502,409 changes made to {bf:priordem})
+
+{com}. label var priordem "individuals with prior history of dementia"
+{txt}
+{com}. label define priorL 0 "none" 1 "had disease before cohort start date"
+{txt}
+{com}. label values priordem priorL
+{txt}
+{com}. 
+. **Source: https://bmcmedicine.biomedcentral.com/track/pdf/10.1186/s12916-021-01980-z.pdf
+. 
+. 
+. **Dementia: A81.0, F00, F01, F02, F03, F05, G30, G31.0, G31.1, G31.8, and I67.3
+. 
+. **AD: (F00, G30)
+. 
+. **VaD: (F01, I67.3)
+. 
+. 
+. *****Incident dementia*******************
+. 
+. 
+. format ts_42018_0_0 %d 
+{txt}
+{com}. 
+. capture drop DEMENTIA_EARLIESTDATE
+{txt}
+{com}. gen DEMENTIA_EARLIESTDATE= ts_42018_0_0  
+{txt}(494,513 missing values generated)
+
+{com}. 
+. capture drop dem_diag
+{txt}
+{com}. gen dem_diag=.
+{txt}(502,409 missing values generated)
+
+{com}. replace dem_diag=1 if DEMENTIA_EARLIESTDATE~=.
+{txt}(7,896 real changes made)
+
+{com}. replace dem_diag=0 if dem_diag~=1
+{txt}(494,513 real changes made)
+
+{com}. 
+. 
+. 
+. ****Incident Alzheimer's Disease***
+. 
+. 
+. format ts_42020_0_0 %d 
+{txt}
+{com}. 
+. capture drop AD_EARLIESTDATE
+{txt}
+{com}. gen AD_EARLIESTDATE = ts_42020_0_0
+{txt}(499,119 missing values generated)
+
+{com}. 
+. 
+. capture drop ad_diag
+{txt}
+{com}. gen ad_diag=.
+{txt}(502,409 missing values generated)
+
+{com}. replace ad_diag=1 if AD_EARLIESTDATE~=.
+{txt}(3,290 real changes made)
+
+{com}. replace ad_diag=0 if ad_diag~=1
+{txt}(499,119 real changes made)
+
+{com}. 
+. 
+. **********************************************
+. 
+. *Years of Birth*
+. capture drop birthyear
+{txt}
+{com}. gen birthyear=n_34_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Month of Birth*
+. capture drop birthmonth
+{txt}
+{com}. gen birthmonth=n_52_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Date of birth*
+. capture drop birthdate
+{txt}
+{com}. gen birthdate=mdy(birthmonth,14,birthyear)
+{txt}(23 missing values generated)
+
+{com}. 
+. *Baseline Cohort Start Date*
+. capture drop startdate
+{txt}
+{com}. gen startdate=ts_53_0_0 
+{txt}(20 missing values generated)
+
+{com}. format startdate %d
+{txt}
+{com}. 
+. *Baseline age**
+. capture drop baselineage
+{txt}
+{com}. gen baselineage=(startdate-birthdate)/365.25
+{txt}(23 missing values generated)
+
+{com}. 
+. *Death Date*
+. capture drop deathdate
+{txt}
+{com}. gen deathdate = ts_40000_0_0 
+{txt}(464,512 missing values generated)
+
+{com}. replace deathdate =  ts_40000_1_0 if deathdate ==.
+{txt}(0 real changes made)
+
+{com}. format deathdate %d
+{txt}
+{com}. label var deathdate "date of death"
+{txt}
+{com}. 
+. **Died vs. not**
+. capture drop died
+{txt}
+{com}. gen died=.
+{txt}(502,409 missing values generated)
+
+{com}. replace died=1 if deathdate~=.
+{txt}(37,897 real changes made)
+
+{com}. replace died=0 if deathdate==.
+{txt}(464,512 real changes made)
+
+{com}. 
+. **Age of death**
+. **https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=40007
+. 
+. capture drop deathage
+{txt}
+{com}. gen deathage=.
+{txt}(502,409 missing values generated)
+
+{com}. replace deathage=n_40007_0_0 if n_40007_0_0~=.
+{txt}(37,897 real changes made)
+
+{com}. replace deathage=n_40007_1_0 if n_40007_1_0~=.
+{txt}(0 real changes made)
+
+{com}. 
+. **https://biobank.ndph.ox.ac.uk/ukb/exinfo.cgi?src=Data_providers_and_dates**
+. 
+. *Generate exit date:
+. capture drop doexit
+{txt}
+{com}. gen doexit = deathdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. replace doexit = d(31oct2021) if doexit==. & died==0
+{txt}(464,512 real changes made)
+
+{com}. format doexit %d
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who survived during follow-up without incident outcome*
+. capture drop time0_0dem timeyrs0_0dem
+{txt}
+{com}. gen time0_0dem = doexit - startdate if died==0
+{txt}(37,917 missing values generated)
+
+{com}. gen timeyrs0_0dem = time0_0/365.25
+{txt}(37,917 missing values generated)
+
+{com}. label var time0_0dem "follow up time in days if no incident outcome and survived, days"
+{txt}
+{com}. label var timeyrs0_0dem "follow up time in years if no incident outcome and survived, years"
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who died during follow-up without incident outcome*
+. capture drop time1_0dem timeyrs1_0dem
+{txt}
+{com}. gen time1_0dem = doexit - startdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. gen timeyrs1_0dem = time1_0 /365.25
+{txt}(464,512 missing values generated)
+
+{com}. label var time1_0dem "follow up time in days if no incident outcome and died, days"
+{txt}
+{com}. label var timeyrs1_0dem "follow up time in years if no incident outcome and died, years"
+{txt}
+{com}. 
+. 
+. ***Generate dementia earliest date for incident cases: **
+. 
+. **Field IDField title
+. **42018Date of all cause dementia report
+. **42019Source of all cause dementia report
+. **42020Date of alzheimer's disease report
+. **42021Source of alzheimer's disease report
+. **42022Date of vascular dementia report
+. **42023Source of vascular dementia report
+. **42024Date of frontotemporal dementia report
+. **42025Source of frontotemporal dementia r
+. 
+. 
+. ***Generate Alzheimer's Disease earliest date for incident cases**
+. **42020         Date of alzheimer's disease report      Dementia outcomes  (**https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=42020)
+. 
+. 
+. 
+. ****Generate follow-up time between start and end among those who survived or died during follow-up but with  incident all-cause dementia*
+. capture drop time01_1Adem 
+{txt}
+{com}. capture drop time01_1Ayearsdem
+{txt}
+{com}. gen time01_1Adem = DEMENTIA_EARLIESTDATE - startdate 
+{txt}(494,513 missing values generated)
+
+{com}. gen time01_1Ayearsdem = time01_1A/365.25 
+{txt}(494,513 missing values generated)
+
+{com}. replace time01_1Ayearsdem=time01_1Ayearsdem if time01_1Ayearsdem>-10
+{txt}(0 real changes made)
+
+{com}. label var time01_1Adem "follow up time in days if Dementia incident outcome and died/survived, days"
+{txt}
+{com}. label var time01_1Ayearsdem "follow up time in days if Dementia incident outcome and died/survived, years"
+{txt}
+{com}. 
+. 
+. ****Generate follow-up time between start and end among those who survived or died during follow-up but with  incident AD*
+. capture drop time01_1BAD 
+{txt}
+{com}. capture drop time01_1ByearsAD
+{txt}
+{com}. gen time01_1BAD = AD_EARLIESTDATE - startdate
+{txt}(499,119 missing values generated)
+
+{com}. gen time01_1ByearsAD = time01_1BAD/365.25 
+{txt}(499,119 missing values generated)
+
+{com}. replace time01_1ByearsAD=time01_1ByearsAD if time01_1ByearsAD>-10
+{txt}(0 real changes made)
+
+{com}. label var time01_1BAD "follow up time in days if AD incident outcome and died/survived, days"
+{txt}
+{com}. label var time01_1ByearsAD "follow up time in years if AD incident outcome and died/survived, years"
+{txt}
+{com}. 
+. 
+. 
+. 
+. *****************All-cause dementia**********************
+. **Generate time to all-cause dementia**
+. 
+. capture drop time_dementia
+{txt}
+{com}. gen time_dementia=.
+{txt}(502,409 missing values generated)
+
+{com}. replace time_dementia=timeyrs1_0dem  if dem_diag==0 & died==1
+{txt}(34,086 real changes made)
+
+{com}. replace time_dementia=time01_1Ayearsdem   if dem_diag==1 
+{txt}(7,896 real changes made)
+
+{com}. replace time_dementia=timeyrs0_0dem   if time_dementia==.
+{txt}(460,407 real changes made)
+
+{com}. 
+. 
+. **Generate Age to incident all-cause dementia or death or end of follow-up**
+. capture drop Age_dementia
+{txt}
+{com}. gen Age_dementia=.
+{txt}(502,409 missing values generated)
+
+{com}. replace Age_dementia=baselineage+time_dementia 
+{txt}(502,386 real changes made)
+
+{com}.  
+. 
+. 
+. capture stset,clear
+{txt}
+{com}. stset Age_dementia, failure(dem_diag==1) enter(baselineage) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}dem_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_dementia[_n-1], Age_dementia]
+{col 6}{txt}Enter on or after: {res}time baselineage
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,409{txt}  total observations
+{res}         23{txt}  event time missing (Age_dementia>=.){col 61}PROBABLE ERROR
+{res}        228{txt}  observations end on or before {bf:enter()}
+{hline 74}
+{res}    502,158{txt}  observations remaining, representing
+{res}    502,158{txt}  subjects
+{res}      7,668{txt}  failures in single-failure-per-subject data
+{res}  6,208,727{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 37.41821
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. capture drop _d_dementia
+{txt}
+{com}. gen _d_dementia=_d
+{txt}(251 missing values generated)
+
+{com}. 
+. 
+. capture drop _t_dementia
+{txt}
+{com}. gen _t_dementia=_t
+{txt}(251 missing values generated)
+
+{com}. 
+. 
+. 
+. *****************AD dementia**********************
+. **Generate time to AD dementia**
+. 
+. capture drop timeyrs0_0AD
+{txt}
+{com}. gen timeyrs0_0AD=timeyrs0_0dem
+{txt}(37,917 missing values generated)
+
+{com}. 
+. capture drop time_AD
+{txt}
+{com}. gen time_AD=.
+{txt}(502,409 missing values generated)
+
+{com}. replace time_AD=timeyrs1_0dem  if ad_diag==0 & died==1
+{txt}(36,338 real changes made)
+
+{com}. replace time_AD=time01_1ByearsAD   if ad_diag==1 
+{txt}(3,290 real changes made)
+
+{com}. replace time_AD=timeyrs0_0dem   if time_AD==.
+{txt}(462,761 real changes made)
+
+{com}. 
+. 
+. **Generate Age to incident AD dementia or death or end of follow-up**
+. capture drop Age_AD
+{txt}
+{com}. gen Age_AD=.
+{txt}(502,409 missing values generated)
+
+{com}. replace Age_AD=baselineage+time_AD 
+{txt}(502,386 real changes made)
+
+{com}.  
+. 
+. 
+. capture stset,clear
+{txt}
+{com}. stset Age_AD, failure(ad_diag==1) enter(baselineage) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}ad_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_AD[_n-1], Age_AD]
+{col 6}{txt}Enter on or after: {res}time baselineage
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,409{txt}  total observations
+{res}         23{txt}  event time missing (Age_AD>=.){col 61}PROBABLE ERROR
+{res}         18{txt}  observations end on or before {bf:enter()}
+{hline 74}
+{res}    502,368{txt}  observations remaining, representing
+{res}    502,368{txt}  subjects
+{res}      3,272{txt}  failures in single-failure-per-subject data
+{res}  6,221,064{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 37.41821
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. capture drop _d_AD
+{txt}
+{com}. gen _d_AD=_d
+{txt}(41 missing values generated)
+
+{com}. 
+. 
+. capture drop _t_AD
+{txt}
+{com}. gen _t_AD=_t
+{txt}(41 missing values generated)
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. su time* Age* _t* _d*, det
+
+      {txt}follow up time in days if no incident outcome and
+                       survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}     4138           4048
+{txt} 5%    {res}     4174           4048
+{txt}10%    {res}     4222           4048       {txt}Obs         {res}    464,492
+{txt}25%    {res}     4405           4048       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res}     4657                      {txt}Mean          {res}   4660.5
+                        {txt}Largest       Std. dev.     {res} 313.3099
+{txt}75%    {res}     4905           5711
+{txt}90%    {res}     5067           5711       {txt}Variance      {res} 98163.11
+{txt}95%    {res}     5158           5711       {txt}Skewness      {res} .1859802
+{txt}99%    {res}     5289           5711       {txt}Kurtosis      {res} 2.453703
+
+     {txt}follow up time in years if no incident outcome and
+                       survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 11.32923       11.08282
+{txt} 5%    {res} 11.42779       11.08282
+{txt}10%    {res} 11.55921       11.08282       {txt}Obs         {res}    464,492
+{txt}25%    {res} 12.06023       11.08282       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res} 12.75017                      {txt}Mean          {res} 12.75975
+                        {txt}Largest       Std. dev.     {res} .8577958
+{txt}75%    {res} 13.42916       15.63587
+{txt}90%    {res} 13.87269       15.63587       {txt}Variance      {res} .7358137
+{txt}95%    {res} 14.12183       15.63587       {txt}Skewness      {res} .1859802
+{txt}99%    {res} 14.48049       15.63587       {txt}Kurtosis      {res} 2.453703
+
+      {txt}follow up time in days if no incident outcome and
+                         died, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}      180              4
+{txt} 5%    {res}      595              5
+{txt}10%    {res}      981              7       {txt}Obs         {res}     37,897
+{txt}25%    {res}     1940              8       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res}     3096                      {txt}Mean          {res} 2909.085
+                        {txt}Largest       Std. dev.     {res} 1281.429
+{txt}75%    {res}     3982           5591
+{txt}90%    {res}     4454           5601       {txt}Variance      {res}  1642061
+{txt}95%    {res}     4678           5616       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}     4980           5626       {txt}Kurtosis      {res} 2.123124
+
+     {txt}follow up time in years if no incident outcome and
+                         died, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .4928131       .0109514
+{txt} 5%    {res} 1.629021       .0136893
+{txt}10%    {res} 2.685832        .019165       {txt}Obs         {res}     37,897
+{txt}25%    {res}  5.31143       .0219028       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res} 8.476386                      {txt}Mean          {res}  7.96464
+                        {txt}Largest       Std. dev.     {res} 3.508362
+{txt}75%    {res} 10.90212       15.30732
+{txt}90%    {res} 12.19439        15.3347       {txt}Variance      {res}  12.3086
+{txt}95%    {res} 12.80767       15.37577       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}  13.6345       15.40315       {txt}Kurtosis      {res} 2.123124
+
+         {txt}follow up time in days if Dementia incident
+               outcome and died/survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}    -1697         -40259
+{txt} 5%    {res}      848         -40210
+{txt}10%    {res}     1597         -39890       {txt}Obs         {res}      7,896
+{txt}25%    {res}   2618.5         -39597       {txt}Sum of wgt. {res}      7,896
+
+{txt}50%    {res}   3488.5                      {txt}Mean          {res} 3189.308
+                        {txt}Largest       Std. dev.     {res} 1713.818
+{txt}75%    {res}     4145           5604
+{txt}90%    {res}     4532           5605       {txt}Variance      {res}  2937171
+{txt}95%    {res}     4715           5614       {txt}Skewness      {res}-10.10697
+{txt}99%    {res}     5025           5630       {txt}Kurtosis      {res} 224.4204
+
+         {txt}follow up time in days if Dementia incident
+              outcome and died/survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-4.646133      -110.2231
+{txt} 5%    {res} 2.321697       -110.089
+{txt}10%    {res} 4.372348      -109.2129       {txt}Obs         {res}      7,896
+{txt}25%    {res} 7.169062      -108.4107       {txt}Sum of wgt. {res}      7,896
+
+{txt}50%    {res} 9.550992                      {txt}Mean          {res} 8.731849
+                        {txt}Largest       Std. dev.     {res} 4.692177
+{txt}75%    {res} 11.34839       15.34292
+{txt}90%    {res} 12.40794       15.34565       {txt}Variance      {res} 22.01652
+{txt}95%    {res} 12.90897       15.37029       {txt}Skewness      {res}-10.10697
+{txt}99%    {res}  13.7577        15.4141       {txt}Kurtosis      {res} 224.4204
+
+      {txt}follow up time in days if AD incident outcome and
+                     died/survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}      376          -1887
+{txt} 5%    {res}     1400          -1785
+{txt}10%    {res}     1894          -1697       {txt}Obs         {res}      3,290
+{txt}25%    {res}     2774          -1476       {txt}Sum of wgt. {res}      3,290
+
+{txt}50%    {res}   3588.5                      {txt}Mean          {res} 3388.913
+                        {txt}Largest       Std. dev.     {res} 1053.786
+{txt}75%    {res}     4184           5533
+{txt}90%    {res}   4549.5           5545       {txt}Variance      {res}  1110464
+{txt}95%    {res}     4733           5614       {txt}Skewness      {res}-.9111813
+{txt}99%    {res}     5017           5630       {txt}Kurtosis      {res} 3.875231
+
+     {txt}follow up time in years if AD incident outcome and
+                    died/survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 1.029432      -5.166325
+{txt} 5%    {res} 3.832991      -4.887064
+{txt}10%    {res} 5.185489      -4.646133       {txt}Obs         {res}      3,290
+{txt}25%    {res} 7.594798      -4.041068       {txt}Sum of wgt. {res}      3,290
+
+{txt}50%    {res} 9.824778                      {txt}Mean          {res} 9.278338
+                        {txt}Largest       Std. dev.     {res} 2.885107
+{txt}75%    {res} 11.45517       15.14853
+{txt}90%    {res} 12.45585       15.18138       {txt}Variance      {res} 8.323845
+{txt}95%    {res} 12.95825       15.37029       {txt}Skewness      {res}-.9111813
+{txt}99%    {res}  13.7358        15.4141       {txt}Kurtosis      {res} 3.875231
+
+                        {txt}time_dementia
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 3.104723      -110.2231
+{txt} 5%    {res} 9.492128       -110.089
+{txt}10%    {res}  11.3922      -109.2129       {txt}Obs         {res}    502,389
+{txt}25%    {res} 11.91239      -108.4107       {txt}Sum of wgt. {res}    502,389
+
+{txt}50%    {res} 12.65161                      {txt}Mean          {res} 12.35553
+                        {txt}Largest       Std. dev.     {res} 1.914274
+{txt}75%    {res} 13.37166       15.63587
+{txt}90%    {res} 13.80151       15.63587       {txt}Variance      {res} 3.664447
+{txt}95%    {res} 14.09172       15.63587       {txt}Skewness      {res} -5.59012
+{txt}99%    {res} 14.47502       15.63587       {txt}Kurtosis      {res} 160.5955
+
+                        {txt}timeyrs0_0AD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 11.32923       11.08282
+{txt} 5%    {res} 11.42779       11.08282
+{txt}10%    {res} 11.55921       11.08282       {txt}Obs         {res}    464,492
+{txt}25%    {res} 12.06023       11.08282       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res} 12.75017                      {txt}Mean          {res} 12.75975
+                        {txt}Largest       Std. dev.     {res} .8577958
+{txt}75%    {res} 13.42916       15.63587
+{txt}90%    {res} 13.87269       15.63587       {txt}Variance      {res} .7358137
+{txt}95%    {res} 14.12183       15.63587       {txt}Skewness      {res} .1859802
+{txt}99%    {res} 14.48049       15.63587       {txt}Kurtosis      {res} 2.453703
+
+                           {txt}time_AD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 3.268994      -5.166325
+{txt} 5%    {res} 9.864476      -4.887064
+{txt}10%    {res} 11.39767      -4.646133       {txt}Obs         {res}    502,389
+{txt}25%    {res} 11.92334      -4.041068       {txt}Sum of wgt. {res}    502,389
+
+{txt}50%    {res} 12.65708                      {txt}Mean          {res} 12.38299
+                        {txt}Largest       Std. dev.     {res} 1.814856
+{txt}75%    {res}  13.3744       15.63587
+{txt}90%    {res} 13.80424       15.63587       {txt}Variance      {res} 3.293701
+{txt}95%    {res} 14.09446       15.63587       {txt}Skewness      {res}-3.310424
+{txt}99%    {res} 14.47502       15.63587       {txt}Kurtosis      {res} 17.67018
+
+                        {txt}Age_dementia
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799      -44.03286
+{txt} 5%    {res} 55.46612      -42.03422
+{txt}10%    {res} 57.46475      -41.94935       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723      -39.52909       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 70.49966                      {txt}Mean          {res} 69.38947
+                        {txt}Largest       Std. dev.     {res} 8.028662
+{txt}75%    {res} 75.79466       85.46475
+{txt}90%    {res} 79.40314       85.46475       {txt}Variance      {res} 64.45941
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3285275
+{txt}99%    {res} 82.79534       87.63313       {txt}Kurtosis      {res} 2.394512
+
+                           {txt}Age_AD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.41693
+                        {txt}Largest       Std. dev.     {res} 8.027481
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res} 64.44044
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3037738
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.068577
+
+                         {txt}_t_dementia
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,158
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,158
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.39559
+                        {txt}Largest       Std. dev.     {res} 8.017498
+{txt}75%    {res} 75.79466       85.46475
+{txt}90%    {res} 79.41957       85.46475       {txt}Variance      {res} 64.28028
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3038455
+{txt}99%    {res} 82.79534       87.63313       {txt}Kurtosis      {res} 2.071392
+
+               {txt}Analysis time when record ends
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,368
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,368
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.41719
+                        {txt}Largest       Std. dev.     {res} 8.027453
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res}    64.44
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3038235
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.068621
+
+              {txt}Analysis time when record begins
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 40.95551       37.41821
+{txt} 5%    {res} 42.78166       38.87201
+{txt}10%    {res} 44.87885       39.19507       {txt}Obs         {res}    502,368
+{txt}25%    {res} 50.55442       39.66051       {txt}Sum of wgt. {res}    502,368
+
+{txt}50%    {res} 58.27789                      {txt}Mean          {res} 57.03371
+                        {txt}Largest       Std. dev.     {res} 8.090641
+{txt}75%    {res} 63.69062       72.11225
+{txt}90%    {res} 67.17864       72.43806       {txt}Variance      {res} 65.45847
+{txt}95%    {res} 68.60233       72.91171       {txt}Skewness      {res}-.3192375
+{txt}99%    {res} 69.83436       73.69199       {txt}Kurtosis      {res}  1.99393
+
+                            {txt}_t_AD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,368
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,368
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.41719
+                        {txt}Largest       Std. dev.     {res} 8.027453
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res}    64.44
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3038235
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.068621
+
+                         {txt}_d_dementia
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    502,158
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    502,158
+
+{txt}50%    {res}        0                      {txt}Mean          {res} .0152701
+                        {txt}Largest       Std. dev.     {res} .1226252
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0150369
+{txt}95%    {res}        0              1       {txt}Skewness      {res} 7.905883
+{txt}99%    {res}        1              1       {txt}Kurtosis      {res} 63.50299
+
+                 {txt}1 if failure; 0 if censored
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    502,368
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    502,368
+
+{txt}50%    {res}        0                      {txt}Mean          {res} .0065132
+                        {txt}Largest       Std. dev.     {res} .0804409
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0064707
+{txt}95%    {res}        0              1       {txt}Skewness      {res} 12.26956
+{txt}99%    {res}        0              1       {txt}Kurtosis      {res}  151.542
+
+                            {txt}_d_AD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    502,368
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    502,368
+
+{txt}50%    {res}        0                      {txt}Mean          {res} .0065132
+                        {txt}Largest       Std. dev.     {res} .0804409
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0064707
+{txt}95%    {res}        0              1       {txt}Skewness      {res} 12.26956
+{txt}99%    {res}        0              1       {txt}Kurtosis      {res}  151.542
+{txt}
+{com}. tab1 dem_diag ad_diag
+
+{res}-> tabulation of dem_diag  
+
+   {txt}dem_diag {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}    494,513       98.43       98.43
+{txt}          1 {c |}{res}      7,896        1.57      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    502,409      100.00
+
+-> tabulation of ad_diag  
+
+    {txt}ad_diag {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}    499,119       99.35       99.35
+{txt}          1 {c |}{res}      3,290        0.65      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    502,409      100.00
+{txt}
+{com}. 
+. 
+. capture stset,clear
+{txt}
+{com}. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. //STEP 12B: GENERATE PD  TIME VARIABLES//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized", clear
+{txt}
+{com}. 
+. keep n_eid n_21022_0_0 n_20009_0_* n_20002_0_* s_41202_0_* n_34_0_0 n_52_0_0 ts_53_0_0 ts_40000_*_0  n_40007_*_0  ts_42030_0_0 ts_42032_0_0
+{txt}
+{com}. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. format ts_42032_0_0 %d 
+{txt}
+{com}. 
+. capture drop PD_EARLIESTDATE
+{txt}
+{com}. gen PD_EARLIESTDATE= ts_42032_0_0  
+{txt}(498,602 missing values generated)
+
+{com}. 
+. capture drop PD_diag
+{txt}
+{com}. gen PD_diag=.
+{txt}(502,409 missing values generated)
+
+{com}. replace PD_diag=1 if PD_EARLIESTDATE~=.
+{txt}(3,807 real changes made)
+
+{com}. replace PD_diag=0 if PD_diag~=1
+{txt}(498,602 real changes made)
+
+{com}. 
+. su PD_EARLIESTDATE
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+PD_EARLIES~E {c |}{res}      3,807    19805.55    2528.998       3470      22562
+{txt}
+{com}. 
+. tab PD_diag
+
+    {txt}PD_diag {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}    498,602       99.24       99.24
+{txt}          1 {c |}{res}      3,807        0.76      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    502,409      100.00
+{txt}
+{com}. 
+. 
+. *Years of Birth*
+. capture drop birthyear
+{txt}
+{com}. gen birthyear=n_34_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Month of Birth*
+. capture drop birthmonth
+{txt}
+{com}. gen birthmonth=n_52_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Date of birth*
+. capture drop birthdate
+{txt}
+{com}. gen birthdate=mdy(birthmonth,14,birthyear)
+{txt}(23 missing values generated)
+
+{com}. 
+. *Baseline Cohort Start Date*
+. capture drop startdate
+{txt}
+{com}. gen startdate=ts_53_0_0 
+{txt}(20 missing values generated)
+
+{com}. format startdate %d
+{txt}
+{com}. 
+. *Baseline age**
+. capture drop baselineage
+{txt}
+{com}. gen baselineage=(startdate-birthdate)/365.25
+{txt}(23 missing values generated)
+
+{com}. 
+. *Death Date*
+. capture drop deathdate
+{txt}
+{com}. gen deathdate = ts_40000_0_0 
+{txt}(464,512 missing values generated)
+
+{com}. replace deathdate =  ts_40000_1_0 if deathdate ==.
+{txt}(0 real changes made)
+
+{com}. format deathdate %d
+{txt}
+{com}. label var deathdate "date of death"
+{txt}
+{com}. 
+. **Died vs. not**
+. capture drop died
+{txt}
+{com}. gen died=.
+{txt}(502,409 missing values generated)
+
+{com}. replace died=1 if deathdate~=.
+{txt}(37,897 real changes made)
+
+{com}. replace died=0 if deathdate==.
+{txt}(464,512 real changes made)
+
+{com}. 
+. **Age of death**
+. **https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=40007
+. 
+. capture drop deathage
+{txt}
+{com}. gen deathage=.
+{txt}(502,409 missing values generated)
+
+{com}. replace deathage=n_40007_0_0 if n_40007_0_0~=.
+{txt}(37,897 real changes made)
+
+{com}. replace deathage=n_40007_1_0 if n_40007_1_0~=.
+{txt}(0 real changes made)
+
+{com}. 
+. **https://biobank.ndph.ox.ac.uk/ukb/exinfo.cgi?src=Data_providers_and_dates**
+. 
+. *Generate exit date:
+. capture drop doexit
+{txt}
+{com}. gen doexit = deathdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. replace doexit = d(31oct2021) if doexit==. & died==0
+{txt}(464,512 real changes made)
+
+{com}. format doexit %d
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who survived during follow-up without incident outcome*
+. capture drop time0_0 timeyrs0_0PD
+{txt}
+{com}. gen time0_0PD = doexit - startdate if died==0
+{txt}(37,917 missing values generated)
+
+{com}. gen timeyrs0_0PD = time0_0PD/365.25
+{txt}(37,917 missing values generated)
+
+{com}. label var time0_0PD "follow up time in days if no incident outcome and survived, days"
+{txt}
+{com}. label var timeyrs0_0PD "follow up time in years if no incident outcome and survived, years"
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who died during follow-up without incident outcome*
+. capture drop time1_0PD timeyrs1_0PD
+{txt}
+{com}. gen time1_0PD = doexit - startdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. gen timeyrs1_0PD = time1_0PD /365.25
+{txt}(464,512 missing values generated)
+
+{com}. label var time1_0PD "follow up time in days if no incident outcome and died, days"
+{txt}
+{com}. label var timeyrs1_0PD "follow up time in years if no incident outcome and died, years"
+{txt}
+{com}. 
+. 
+. ***Generate PD earliest date for incident cases: **
+. 
+. 
+. ****Generate follow-up time between start and end among those who survived or died during follow-up but with  incident PD*
+. capture drop time01_1APD 
+{txt}
+{com}. capture drop time01_1AyearsPD
+{txt}
+{com}. gen time01_1APD = PD_EARLIESTDATE - startdate 
+{txt}(498,602 missing values generated)
+
+{com}. gen time01_1AyearsPD = time01_1A/365.25 
+{txt}(498,602 missing values generated)
+
+{com}. replace time01_1AyearsPD=time01_1AyearsPD if time01_1AyearsPD>-10
+{txt}(0 real changes made)
+
+{com}. label var time01_1APD "follow up time in days if Dementia incident outcome and died/survived, days"
+{txt}
+{com}. label var time01_1AyearsPD "follow up time in days if Dementia incident outcome and died/survived, years"
+{txt}
+{com}. 
+. 
+. **Generate time to PD**
+. 
+. capture drop time_PD
+{txt}
+{com}. gen time_PD=.
+{txt}(502,409 missing values generated)
+
+{com}. replace time_PD=timeyrs1_0PD  if PD_diag==0 & died==1
+{txt}(36,484 real changes made)
+
+{com}. replace time_PD=time01_1AyearsPD   if PD_diag==1 
+{txt}(3,807 real changes made)
+
+{com}. replace time_PD=timeyrs0_0PD   if time_PD==.
+{txt}(462,098 real changes made)
+
+{com}. 
+. 
+. **Generate Age to incident PD or death or end of follow-up**
+. capture drop Age_PD
+{txt}
+{com}. gen Age_PD=.
+{txt}(502,409 missing values generated)
+
+{com}. replace Age_PD=baselineage+time_PD 
+{txt}(502,386 real changes made)
+
+{com}. 
+. 
+. 
+. 
+. **Generate the two survival time/event variables for multistate**
+. 
+. capture stset,clear
+{txt}
+{com}. stset Age_PD, failure(PD_diag==1) enter(baselineage) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}PD_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_PD[_n-1], Age_PD]
+{col 6}{txt}Enter on or after: {res}time baselineage
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,409{txt}  total observations
+{res}         23{txt}  event time missing (Age_PD>=.){col 61}PROBABLE ERROR
+{res}        901{txt}  observations end on or before {bf:enter()}
+{hline 74}
+{res}    501,485{txt}  observations remaining, representing
+{res}    501,485{txt}  subjects
+{res}      2,906{txt}  failures in single-failure-per-subject data
+{res}  6,209,394{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 37.41821
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+.  
+. capture drop _d_PD
+{txt}
+{com}. gen _d_PD=_d
+{txt}(924 missing values generated)
+
+{com}. 
+. 
+. capture drop _t_PD
+{txt}
+{com}. gen _t_PD=_t
+{txt}(924 missing values generated)
+
+{com}. 
+. 
+. 
+. 
+. 
+. su time* Age* _t* _d*, det
+
+      {txt}follow up time in days if no incident outcome and
+                       survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}     4138           4048
+{txt} 5%    {res}     4174           4048
+{txt}10%    {res}     4222           4048       {txt}Obs         {res}    464,492
+{txt}25%    {res}     4405           4048       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res}     4657                      {txt}Mean          {res}   4660.5
+                        {txt}Largest       Std. dev.     {res} 313.3099
+{txt}75%    {res}     4905           5711
+{txt}90%    {res}     5067           5711       {txt}Variance      {res} 98163.11
+{txt}95%    {res}     5158           5711       {txt}Skewness      {res} .1859802
+{txt}99%    {res}     5289           5711       {txt}Kurtosis      {res} 2.453703
+
+     {txt}follow up time in years if no incident outcome and
+                       survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 11.32923       11.08282
+{txt} 5%    {res} 11.42779       11.08282
+{txt}10%    {res} 11.55921       11.08282       {txt}Obs         {res}    464,492
+{txt}25%    {res} 12.06023       11.08282       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res} 12.75017                      {txt}Mean          {res} 12.75975
+                        {txt}Largest       Std. dev.     {res} .8577958
+{txt}75%    {res} 13.42916       15.63587
+{txt}90%    {res} 13.87269       15.63587       {txt}Variance      {res} .7358137
+{txt}95%    {res} 14.12183       15.63587       {txt}Skewness      {res} .1859802
+{txt}99%    {res} 14.48049       15.63587       {txt}Kurtosis      {res} 2.453703
+
+      {txt}follow up time in days if no incident outcome and
+                         died, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}      180              4
+{txt} 5%    {res}      595              5
+{txt}10%    {res}      981              7       {txt}Obs         {res}     37,897
+{txt}25%    {res}     1940              8       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res}     3096                      {txt}Mean          {res} 2909.085
+                        {txt}Largest       Std. dev.     {res} 1281.429
+{txt}75%    {res}     3982           5591
+{txt}90%    {res}     4454           5601       {txt}Variance      {res}  1642061
+{txt}95%    {res}     4678           5616       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}     4980           5626       {txt}Kurtosis      {res} 2.123124
+
+     {txt}follow up time in years if no incident outcome and
+                         died, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .4928131       .0109514
+{txt} 5%    {res} 1.629021       .0136893
+{txt}10%    {res} 2.685832        .019165       {txt}Obs         {res}     37,897
+{txt}25%    {res}  5.31143       .0219028       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res} 8.476386                      {txt}Mean          {res}  7.96464
+                        {txt}Largest       Std. dev.     {res} 3.508362
+{txt}75%    {res} 10.90212       15.30732
+{txt}90%    {res} 12.19439        15.3347       {txt}Variance      {res}  12.3086
+{txt}95%    {res} 12.80767       15.37577       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}  13.6345       15.40315       {txt}Kurtosis      {res} 2.123124
+
+         {txt}follow up time in days if Dementia incident
+               outcome and died/survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}    -5765         -14486
+{txt} 5%    {res}    -3189          -9891
+{txt}10%    {res}    -1826          -9637       {txt}Obs         {res}      3,807
+{txt}25%    {res}      503          -7935       {txt}Sum of wgt. {res}      3,807
+
+{txt}50%    {res}     2775                      {txt}Mean          {res} 1906.464
+                        {txt}Largest       Std. dev.     {res} 2532.998
+{txt}75%    {res}     3785           5474
+{txt}90%    {res}     4320           5496       {txt}Variance      {res}  6416081
+{txt}95%    {res}     4584           5574       {txt}Skewness      {res}-1.255408
+{txt}99%    {res}     4909           5580       {txt}Kurtosis      {res} 4.341756
+
+         {txt}follow up time in days if Dementia incident
+              outcome and died/survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-15.78371      -39.66051
+{txt} 5%    {res}-8.731007      -27.08008
+{txt}10%    {res}-4.999316      -26.38467       {txt}Obs         {res}      3,807
+{txt}25%    {res} 1.377139      -21.72485       {txt}Sum of wgt. {res}      3,807
+
+{txt}50%    {res} 7.597536                      {txt}Mean          {res} 5.219613
+                        {txt}Largest       Std. dev.     {res} 6.934972
+{txt}75%    {res} 10.36277       14.98699
+{txt}90%    {res} 11.82752       15.04723       {txt}Variance      {res} 48.09383
+{txt}95%    {res} 12.55031       15.26078       {txt}Skewness      {res}-1.255408
+{txt}99%    {res} 13.44011       15.27721       {txt}Kurtosis      {res} 4.341756
+
+                           {txt}time_PD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 2.800821      -39.66051
+{txt} 5%    {res} 9.639973      -27.08008
+{txt}10%    {res} 11.39493      -26.38467       {txt}Obs         {res}    502,389
+{txt}25%    {res} 11.91786      -21.72485       {txt}Sum of wgt. {res}    502,389
+
+{txt}50%    {res} 12.65708                      {txt}Mean          {res} 12.34996
+                        {txt}Largest       Std. dev.     {res} 1.978911
+{txt}75%    {res}  13.3744       15.63587
+{txt}90%    {res} 13.80424       15.63587       {txt}Variance      {res} 3.916089
+{txt}95%    {res} 14.09172       15.63587       {txt}Skewness      {res}-4.160597
+{txt}99%    {res} 14.47502       15.63587       {txt}Kurtosis      {res} 31.18807
+
+                           {txt}Age_PD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.07324       25.46475
+{txt} 5%    {res} 55.38125       30.63107
+{txt}10%    {res} 57.46475       31.87954       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723       36.48186       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res}  70.4668                      {txt}Mean          {res}  69.3839
+                        {txt}Largest       Std. dev.     {res} 8.045934
+{txt}75%    {res} 75.79466       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res} 64.73705
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3044311
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.083982
+
+               {txt}Analysis time when record ends
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    501,485
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    501,485
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.40569
+                        {txt}Largest       Std. dev.     {res} 8.030999
+{txt}75%    {res} 75.84394       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res} 64.49694
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3011326
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.067377
+
+              {txt}Analysis time when record begins
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 40.95551       37.41821
+{txt} 5%    {res} 42.77618       38.87201
+{txt}10%    {res} 44.87064       39.19507       {txt}Obs         {res}    501,485
+{txt}25%    {res} 50.54346       39.66051       {txt}Sum of wgt. {res}    501,485
+
+{txt}50%    {res}  58.2642                      {txt}Mean          {res} 57.02368
+                        {txt}Largest       Std. dev.     {res} 8.090903
+{txt}75%    {res} 63.67967       72.11225
+{txt}90%    {res}  67.1759       72.43806       {txt}Variance      {res} 65.46271
+{txt}95%    {res} 68.59686       72.91171       {txt}Skewness      {res} -.317801
+{txt}99%    {res} 69.83436       73.69199       {txt}Kurtosis      {res} 1.992927
+
+                            {txt}_t_PD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    501,485
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    501,485
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.40569
+                        {txt}Largest       Std. dev.     {res} 8.030999
+{txt}75%    {res} 75.84394       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res} 64.49694
+{txt}95%    {res} 81.04586       85.63176       {txt}Skewness      {res}-.3011326
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.067377
+
+                 {txt}1 if failure; 0 if censored
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    501,485
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    501,485
+
+{txt}50%    {res}        0                      {txt}Mean          {res} .0057948
+                        {txt}Largest       Std. dev.     {res} .0759027
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0057612
+{txt}95%    {res}        0              1       {txt}Skewness      {res} 13.02208
+{txt}99%    {res}        0              1       {txt}Kurtosis      {res} 170.5747
+
+                            {txt}_d_PD
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    501,485
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    501,485
+
+{txt}50%    {res}        0                      {txt}Mean          {res} .0057948
+                        {txt}Largest       Std. dev.     {res} .0759027
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0057612
+{txt}95%    {res}        0              1       {txt}Skewness      {res} 13.02208
+{txt}99%    {res}        0              1       {txt}Kurtosis      {res} 170.5747
+{txt}
+{com}. tab1 PD_diag
+
+{res}-> tabulation of PD_diag  
+
+    {txt}PD_diag {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}    498,602       99.24       99.24
+{txt}          1 {c |}{res}      3,807        0.76      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    502,409      100.00
+{txt}
+{com}. 
+. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. ********STEP 12C: MORTALITY OUTCOME**********************
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized", clear
+{txt}
+{com}. 
+. keep n_eid n_21022_0_0 n_20009_0_* n_20002_0_* s_41202_0_* n_34_0_0 n_52_0_0 ts_53_0_0 ts_40000_*_0  n_40007_*_0 
+{txt}
+{com}. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. *Years of Birth*
+. capture drop birthyear
+{txt}
+{com}. gen birthyear=n_34_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Month of Birth*
+. capture drop birthmonth
+{txt}
+{com}. gen birthmonth=n_52_0_0 
+{txt}(23 missing values generated)
+
+{com}. 
+. *Date of birth*
+. capture drop birthdate
+{txt}
+{com}. gen birthdate=mdy(birthmonth,14,birthyear)
+{txt}(23 missing values generated)
+
+{com}. 
+. *Baseline Cohort Start Date*
+. capture drop startdate
+{txt}
+{com}. gen startdate=ts_53_0_0 
+{txt}(20 missing values generated)
+
+{com}. format startdate %d
+{txt}
+{com}. 
+. *Baseline age**
+. capture drop baselineage
+{txt}
+{com}. gen baselineage=(startdate-birthdate)/365.25
+{txt}(23 missing values generated)
+
+{com}. 
+. *Death Date*
+. capture drop deathdate
+{txt}
+{com}. gen deathdate = ts_40000_0_0 
+{txt}(464,512 missing values generated)
+
+{com}. replace deathdate =  ts_40000_1_0 if deathdate ==.
+{txt}(0 real changes made)
+
+{com}. format deathdate %d
+{txt}
+{com}. label var deathdate "date of death"
+{txt}
+{com}. 
+. **Died vs. not**
+. capture drop died
+{txt}
+{com}. gen died=.
+{txt}(502,409 missing values generated)
+
+{com}. replace died=1 if deathdate~=.
+{txt}(37,897 real changes made)
+
+{com}. replace died=0 if deathdate==.
+{txt}(464,512 real changes made)
+
+{com}. 
+. **Age of death**
+. **https://biobank.ctsu.ox.ac.uk/crystal/field.cgi?id=40007
+. 
+. capture drop deathage
+{txt}
+{com}. gen deathage=.
+{txt}(502,409 missing values generated)
+
+{com}. replace deathage=n_40007_0_0 if n_40007_0_0~=.
+{txt}(37,897 real changes made)
+
+{com}. replace deathage=n_40007_1_0 if n_40007_1_0~=.
+{txt}(0 real changes made)
+
+{com}. 
+. **https://biobank.ndph.ox.ac.uk/ukb/exinfo.cgi?src=Data_providers_and_dates**
+. 
+. *Generate exit date:
+. capture drop doexit
+{txt}
+{com}. gen doexit = deathdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. replace doexit = d(31oct2021) if doexit==. & died==0
+{txt}(464,512 real changes made)
+
+{com}. format doexit %d
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who survived during follow-up without incident outcome*
+. capture drop time0_0 timeyrs0_0
+{txt}
+{com}. gen time0_0 = doexit - startdate if died==0
+{txt}(37,917 missing values generated)
+
+{com}. gen timeyrs0_0 = time0_0/365.25
+{txt}(37,917 missing values generated)
+
+{com}. label var time0_0 "follow up time in days if no incident outcome and survived, days"
+{txt}
+{com}. label var timeyrs0_0 "follow up time in years if no incident outcome and survived, years"
+{txt}
+{com}. 
+. *Generate follow-up time between start and end among those who died during follow-up without incident outcome*
+. capture drop time1_0 timeyrs1_0
+{txt}
+{com}. gen time1_0 = doexit - startdate if died==1
+{txt}(464,512 missing values generated)
+
+{com}. gen timeyrs1_0 = time1_0 /365.25
+{txt}(464,512 missing values generated)
+
+{com}. label var time1_0 "follow up time in days if no incident outcome and died, days"
+{txt}
+{com}. label var timeyrs1_0 "follow up time in years if no incident outcome and died, years"
+{txt}
+{com}. 
+. 
+. 
+. **Generate time to DEATH**
+. 
+. capture drop time_death
+{txt}
+{com}. gen time_death=.
+{txt}(502,409 missing values generated)
+
+{com}. replace time_death=timeyrs1_0  if  died==1
+{txt}(37,897 real changes made)
+
+{com}. replace time_death=timeyrs0_0   if deathdate==.
+{txt}(464,492 real changes made)
+
+{com}. 
+. 
+. **Generate Age to incident PD or death or end of follow-up**
+. capture drop Age_death
+{txt}
+{com}. gen Age_death=.
+{txt}(502,409 missing values generated)
+
+{com}. replace Age_death=baselineage+time_death
+{txt}(502,386 real changes made)
+
+{com}. 
+. 
+. **Generate the two survival time/event variables for multistate**
+. 
+. capture stset,clear
+{txt}
+{com}. stset Age_death, failure(died==1) enter(baselineage) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}died==1
+{col 1}{txt}Observed time interval: {res}(Age_death[_n-1], Age_death]
+{col 6}{txt}Enter on or after: {res}time baselineage
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,409{txt}  total observations
+{res}         23{txt}  event time missing (Age_death>=.){col 61}PROBABLE ERROR
+{hline 74}
+{res}    502,386{txt}  observations remaining, representing
+{res}    502,386{txt}  subjects
+{res}     37,897{txt}  failures in single-failure-per-subject data
+{res}  6,228,594{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 37.41821
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+.  
+. capture drop _d_death
+{txt}
+{com}. gen _d_death=_d
+{txt}(23 missing values generated)
+
+{com}. 
+. 
+. capture drop _t_death
+{txt}
+{com}. gen _t_death=_t
+{txt}(23 missing values generated)
+
+{com}. 
+. 
+. su time* Age* _t* _d*, det
+
+      {txt}follow up time in days if no incident outcome and
+                       survived, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}     4138           4048
+{txt} 5%    {res}     4174           4048
+{txt}10%    {res}     4222           4048       {txt}Obs         {res}    464,492
+{txt}25%    {res}     4405           4048       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res}     4657                      {txt}Mean          {res}   4660.5
+                        {txt}Largest       Std. dev.     {res} 313.3099
+{txt}75%    {res}     4905           5711
+{txt}90%    {res}     5067           5711       {txt}Variance      {res} 98163.11
+{txt}95%    {res}     5158           5711       {txt}Skewness      {res} .1859802
+{txt}99%    {res}     5289           5711       {txt}Kurtosis      {res} 2.453703
+
+     {txt}follow up time in years if no incident outcome and
+                       survived, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 11.32923       11.08282
+{txt} 5%    {res} 11.42779       11.08282
+{txt}10%    {res} 11.55921       11.08282       {txt}Obs         {res}    464,492
+{txt}25%    {res} 12.06023       11.08282       {txt}Sum of wgt. {res}    464,492
+
+{txt}50%    {res} 12.75017                      {txt}Mean          {res} 12.75975
+                        {txt}Largest       Std. dev.     {res} .8577958
+{txt}75%    {res} 13.42916       15.63587
+{txt}90%    {res} 13.87269       15.63587       {txt}Variance      {res} .7358137
+{txt}95%    {res} 14.12183       15.63587       {txt}Skewness      {res} .1859802
+{txt}99%    {res} 14.48049       15.63587       {txt}Kurtosis      {res} 2.453703
+
+      {txt}follow up time in days if no incident outcome and
+                         died, days
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}      180              4
+{txt} 5%    {res}      595              5
+{txt}10%    {res}      981              7       {txt}Obs         {res}     37,897
+{txt}25%    {res}     1940              8       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res}     3096                      {txt}Mean          {res} 2909.085
+                        {txt}Largest       Std. dev.     {res} 1281.429
+{txt}75%    {res}     3982           5591
+{txt}90%    {res}     4454           5601       {txt}Variance      {res}  1642061
+{txt}95%    {res}     4678           5616       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}     4980           5626       {txt}Kurtosis      {res} 2.123124
+
+     {txt}follow up time in years if no incident outcome and
+                         died, years
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .4928131       .0109514
+{txt} 5%    {res} 1.629021       .0136893
+{txt}10%    {res} 2.685832        .019165       {txt}Obs         {res}     37,897
+{txt}25%    {res}  5.31143       .0219028       {txt}Sum of wgt. {res}     37,897
+
+{txt}50%    {res} 8.476386                      {txt}Mean          {res}  7.96464
+                        {txt}Largest       Std. dev.     {res} 3.508362
+{txt}75%    {res} 10.90212       15.30732
+{txt}90%    {res} 12.19439        15.3347       {txt}Variance      {res}  12.3086
+{txt}95%    {res} 12.80767       15.37577       {txt}Skewness      {res}-.3833586
+{txt}99%    {res}  13.6345       15.40315       {txt}Kurtosis      {res} 2.123124
+
+                         {txt}time_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 3.312799       .0109514
+{txt} 5%    {res} 10.13552       .0136893
+{txt}10%    {res} 11.40589        .019165       {txt}Obs         {res}    502,389
+{txt}25%    {res} 11.92882       .0219028       {txt}Sum of wgt. {res}    502,389
+
+{txt}50%    {res} 12.66256                      {txt}Mean          {res} 12.39804
+                        {txt}Largest       Std. dev.     {res} 1.792314
+{txt}75%    {res} 13.37988       15.63587
+{txt}90%    {res} 13.80424       15.63587       {txt}Variance      {res} 3.212389
+{txt}95%    {res} 14.09446       15.63587       {txt}Skewness      {res}-3.348635
+{txt}99%    {res} 14.47502       15.63587       {txt}Kurtosis      {res} 18.11897
+
+                          {txt}Age_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.43198
+                        {txt}Largest       Std. dev.     {res} 8.037133
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res}  64.5955
+{txt}95%    {res} 81.12799       85.63176       {txt}Skewness      {res}-.3036279
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.066779
+
+               {txt}Analysis time when record ends
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.43198
+                        {txt}Largest       Std. dev.     {res} 8.037133
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res}  64.5955
+{txt}95%    {res} 81.12799       85.63176       {txt}Skewness      {res}-.3036279
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.066779
+
+              {txt}Analysis time when record begins
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 40.95551       37.41821
+{txt} 5%    {res} 42.78166       38.87201
+{txt}10%    {res} 44.87885       39.19507       {txt}Obs         {res}    502,386
+{txt}25%    {res} 50.55442       39.66051       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 58.27789                      {txt}Mean          {res} 57.03395
+                        {txt}Largest       Std. dev.     {res} 8.090639
+{txt}75%    {res} 63.69062       72.11225
+{txt}90%    {res} 67.17864       72.43806       {txt}Variance      {res} 65.45844
+{txt}95%    {res} 68.60233       72.91171       {txt}Skewness      {res}-.3192715
+{txt}99%    {res} 69.83436       73.69199       {txt}Kurtosis      {res} 1.993959
+
+                          {txt}_t_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 53.12799       40.37783
+{txt} 5%    {res} 55.46612         40.846
+{txt}10%    {res} 57.46475        41.1718       {txt}Obs         {res}    502,386
+{txt}25%    {res} 63.04723       41.36618       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res} 70.54893                      {txt}Mean          {res} 69.43198
+                        {txt}Largest       Std. dev.     {res} 8.037133
+{txt}75%    {res} 75.87953       85.46475
+{txt}90%    {res} 79.46612       85.46475       {txt}Variance      {res}  64.5955
+{txt}95%    {res} 81.12799       85.63176       {txt}Skewness      {res}-.3036279
+{txt}99%    {res} 82.79535       87.63313       {txt}Kurtosis      {res} 2.066779
+
+                 {txt}1 if failure; 0 if censored
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    502,386
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res}        0                      {txt}Mean          {res}  .075434
+                        {txt}Largest       Std. dev.     {res} .2640907
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0697439
+{txt}95%    {res}        1              1       {txt}Skewness      {res} 3.215308
+{txt}99%    {res}        1              1       {txt}Kurtosis      {res} 11.33821
+
+                          {txt}_d_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        0              0
+{txt}10%    {res}        0              0       {txt}Obs         {res}    502,386
+{txt}25%    {res}        0              0       {txt}Sum of wgt. {res}    502,386
+
+{txt}50%    {res}        0                      {txt}Mean          {res}  .075434
+                        {txt}Largest       Std. dev.     {res} .2640907
+{txt}75%    {res}        0              1
+{txt}90%    {res}        0              1       {txt}Variance      {res} .0697439
+{txt}95%    {res}        1              1       {txt}Skewness      {res} 3.215308
+{txt}99%    {res}        1              1       {txt}Kurtosis      {res} 11.33821
+{txt}
+{com}. tab1 died
+
+{res}-> tabulation of died  
+
+       {txt}died {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}    464,512       92.46       92.46
+{txt}          1 {c |}{res}     37,897        7.54      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    502,409      100.00
+{txt}
+{com}. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ////////////////STEP 13: AD AND OTHER STANDARD PGS////////////////////////
+> 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\SMALLERDATASETUKBfinalized",clear
+{txt}
+{com}. 
+. keep n_eid  n_262*_0_0
+{txt}
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PGS", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PGS.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture drop AD_PGS
+{txt}
+{com}. gen AD_PGS=n_26206_0_0
+{txt}(16,259 missing values generated)
+
+{com}. 
+. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PGS.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. //STEP 14: MERGE DATASETS TOGETHER//
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\COGN_UKB",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\COGN_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\LE8_UKB",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\LE8_UKB.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. merge n_eid using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\COGN_UKB"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. merge n_eid using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\ADDEMENTIA_UKB"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. merge n_eid using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\PD_UKB"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. merge n_eid using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\MORT_UKB"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. 
+. 
+. merge n_eid using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PGS"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. //STEP 15: MERGE DATASETS TOGETHER WITH WITHDRAWALS//
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\withdrawals",clear
+{txt}
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\withdrawals.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. cd "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA"
+{res}E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA
+{txt}
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT",clear
+{txt}
+{com}. merge n_eid using withdrawals
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT.dta{rm}
+saved
+{p_end}
+
+{com}. sort n_eid
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save, replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\UKB_PAPER9B_TDIPDDEMMORT.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

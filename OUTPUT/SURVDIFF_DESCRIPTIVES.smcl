@@ -1,0 +1,295 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin_MULTISTATE",clear
+{txt}
+{com}. 
+. 
+. su s1diff80* if sample_final==1 & _trans1==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0017987       .0014883
+{txt} 5%    {res} .0021855        .001497
+{txt}10%    {res}   .00266       .0015165       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0038251       .0015174       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0058461                      {txt}Mean          {res} .0070805
+                        {txt}Largest       Std. dev.     {res} .0044249
+{txt}75%    {res} .0091183       .0268255
+{txt}90%    {res} .0132217       .0275009       {txt}Variance      {res} .0000196
+{txt}95%    {res} .0169626       .0287152       {txt}Skewness      {res} 1.318515
+{txt}99%    {res} .0210496       .0313618       {txt}Kurtosis      {res} 4.449964
+
+                  {txt}95% lower bound: s1diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0005247      -.0179087
+{txt} 5%    {res} .0006409      -.0167423
+{txt}10%    {res} .0007823      -.0156778       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0011225      -.0148959       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0017051                      {txt}Mean          {res} .0020314
+                        {txt}Largest       Std. dev.     {res} .0012348
+{txt}75%    {res} .0026045       .0070461
+{txt}90%    {res}  .003788       .0071129       {txt}Variance      {res} 1.52e-06
+{txt}95%    {res} .0047897       .0071432       {txt}Skewness      {res} 1.205812
+{txt}99%    {res} .0058485       .0071509       {txt}Kurtosis      {res} 4.891521
+
+                  {txt}95% upper bound: s1diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  .003071       .0025429
+{txt} 5%    {res}  .003728       .0025595
+{txt}10%    {res}  .004537       .0025864       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0065266        .002587       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0099863                      {txt}Mean          {res} .0121296
+                        {txt}Largest       Std. dev.     {res}  .007624
+{txt}75%    {res}  .015635        .061868
+{txt}90%    {res} .0226697       .0639035       {txt}Variance      {res} .0000581
+{txt}95%    {res} .0291497       .0683608       {txt}Skewness      {res}  1.33071
+{txt}99%    {res} .0362769       .0776195       {txt}Kurtosis      {res} 4.510954
+{txt}
+{com}. su s2diff80* if sample_final==1 & _trans2==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0166182       .0026498
+{txt} 5%    {res} .0210819        .003202
+{txt}10%    {res} .0242218       .0035858       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0312993       .0037064       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0430545                      {txt}Mean          {res} .0484855
+                        {txt}Largest       Std. dev.     {res} .0230292
+{txt}75%    {res} .0607466       .1848815
+{txt}90%    {res} .0806521       .1853698       {txt}Variance      {res} .0005303
+{txt}95%    {res} .0938913       .1875843       {txt}Skewness      {res} 1.160352
+{txt}99%    {res} .1201364       .1909137       {txt}Kurtosis      {res} 4.460567
+
+                  {txt}95% lower bound: s2diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0137855      -.0056355
+{txt} 5%    {res} .0176393      -.0047606
+{txt}10%    {res} .0203223      -.0040906       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0262848      -.0040155       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0359437                      {txt}Mean          {res} .0401207
+                        {txt}Largest       Std. dev.     {res} .0186433
+{txt}75%    {res} .0500015       .1541195
+{txt}90%    {res} .0659208       .1541611       {txt}Variance      {res} .0003476
+{txt}95%    {res}  .076638       .1567595       {txt}Skewness      {res} 1.153925
+{txt}99%    {res} .0982508       .1593965       {txt}Kurtosis      {res} 4.540287
+
+                  {txt}95% upper bound: s2diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0194253        .006163
+{txt} 5%    {res} .0245031       .0086128
+{txt}10%    {res} .0281119       .0088917       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0362885       .0089045       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .0501394                      {txt}Mean          {res} .0568503
+                        {txt}Largest       Std. dev.     {res} .0274506
+{txt}75%    {res} .0715222       .2165439
+{txt}90%    {res} .0954508       .2176169       {txt}Variance      {res} .0007535
+{txt}95%    {res} .1112205       .2184091       {txt}Skewness      {res} 1.164872
+{txt}99%    {res} .1421454        .222431       {txt}Kurtosis      {res} 4.408107
+{txt}
+{com}. su s3diff80* if sample_final==1 & _trans3==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0390961       .0023197
+{txt} 5%    {res}  .054464       .0026332
+{txt}10%    {res} .0660646       .0030253       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0919459       .0032313       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .1335607                      {txt}Mean          {res} .1408009
+                        {txt}Largest       Std. dev.     {res}  .059624
+{txt}75%    {res} .1870118       .2549965
+{txt}90%    {res} .2316271       .2549965       {txt}Variance      {res}  .003555
+{txt}95%    {res} .2471529       .2549965       {txt}Skewness      {res} .2746521
+{txt}99%    {res} .2546211       .2549965       {txt}Kurtosis      {res} 2.031382
+
+                  {txt}95% lower bound: s3diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0361442       .0004762
+{txt} 5%    {res} .0505624       .0006196
+{txt}10%    {res}  .061419       .0009274       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0856134       .0011036       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .1245366                      {txt}Mean          {res} .1315026
+                        {txt}Largest       Std. dev.     {res}  .056093
+{txt}75%    {res}  .174694       .2397735
+{txt}90%    {res} .2170928        .239776       {txt}Variance      {res} .0031464
+{txt}95%    {res} .2320719       .2397765       {txt}Skewness      {res} .2865117
+{txt}99%    {res} .2393868       .2397795       {txt}Kurtosis      {res} 2.045009
+
+                  {txt}95% upper bound: s3diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0420337        .003712
+{txt} 5%    {res} .0583734       .0047901
+{txt}10%    {res} .0707417        .004947       {txt}Obs         {res}    363,663
+{txt}25%    {res} .0982834       .0054597       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} .1426133                      {txt}Mean          {res} .1500991
+                        {txt}Largest       Std. dev.     {res} .0631626
+{txt}75%    {res} .1993455       .2702709
+{txt}90%    {res} .2461625       .2702733       {txt}Variance      {res} .0039895
+{txt}95%    {res} .2622121       .2702746       {txt}Skewness      {res} .2641662
+{txt}99%    {res} .2698657       .2702786       {txt}Kurtosis      {res} 2.019598
+{txt}
+{com}. su s4diff80* if sample_final==1 & _trans4==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-.0961349      -.0961358
+{txt} 5%    {res}-.0961195      -.0961358
+{txt}10%    {res}-.0960613      -.0961357       {txt}Obs         {res}      2,308
+{txt}25%    {res}-.0955728      -.0961357       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res}-.0936547                      {txt}Mean          {res}-.0912094
+                        {txt}Largest       Std. dev.     {res} .0069236
+{txt}75%    {res}-.0893877      -.0568733
+{txt}90%    {res}-.0832919      -.0008693       {txt}Variance      {res} .0000479
+{txt}95%    {res}-.0784588       -.000676       {txt}Skewness      {res} 4.310496
+{txt}99%    {res}-.0665066      -.0002152       {txt}Kurtosis      {res} 42.98024
+
+                  {txt}95% lower bound: s4diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-.2619295      -.2620112
+{txt} 5%    {res}-.2618766      -.2620073
+{txt}10%    {res}-.2617385       -.262006       {txt}Obs         {res}      2,308
+{txt}25%    {res}-.2604918      -.2619724       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res}-.2554156                      {txt}Mean          {res} -.248786
+                        {txt}Largest       Std. dev.     {res} .0186975
+{txt}75%    {res}-.2439523      -.1568625
+{txt}90%    {res}-.2277144      -.0049303       {txt}Variance      {res} .0003496
+{txt}95%    {res}-.2136891      -.0037846       {txt}Skewness      {res} 4.341759
+{txt}99%    {res}-.1828126      -.0014041       {txt}Kurtosis      {res} 43.40172
+
+                  {txt}95% upper bound: s4diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0489939       .0009738
+{txt} 5%    {res}  .057004       .0024326
+{txt}10%    {res} .0608694       .0031916       {txt}Obs         {res}      2,308
+{txt}25%    {res} .0651751       .0417906       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res} .0681644                      {txt}Mean          {res} .0663672
+                        {txt}Largest       Std. dev.     {res}  .004889
+{txt}75%    {res} .0693822       .0701671
+{txt}90%    {res} .0696354       .0703208       {txt}Variance      {res} .0000239
+{txt}95%    {res} .0696846       .0704323       {txt}Skewness      {res}-4.364452
+{txt}99%    {res} .0698923       .0706625       {txt}Kurtosis      {res}  43.4511
+{txt}
+{com}. su s5diff80* if sample_final==1 & _trans5==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0034267       .0026044
+{txt} 5%    {res} .0039828       .0026518
+{txt}10%    {res} .0042082       .0027725       {txt}Obs         {res}      2,308
+{txt}25%    {res} .0046104       .0029105       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res}   .00501                      {txt}Mean          {res} .0049047
+                        {txt}Largest       Std. dev.     {res} .0004895
+{txt}75%    {res} .0053362       .0054338
+{txt}90%    {res}  .005421       .0054338       {txt}Variance      {res} 2.40e-07
+{txt}95%    {res} .0054314       .0054338       {txt}Skewness      {res}-1.101429
+{txt}99%    {res} .0054337       .0054338       {txt}Kurtosis      {res} 4.183018
+
+                  {txt}95% lower bound: s5diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-.1165629      -.1165668
+{txt} 5%    {res}-.1165157      -.1165658
+{txt}10%    {res}-.1162915      -.1165653       {txt}Obs         {res}      2,308
+{txt}25%    {res}-.1144897      -.1165652       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res}-.1074659                      {txt}Mean          {res}-.1052383
+                        {txt}Largest       Std. dev.     {res} .0104656
+{txt}75%    {res}-.0989193      -.0626737
+{txt}90%    {res} -.090342      -.0597278       {txt}Variance      {res} .0001095
+{txt}95%    {res}-.0855404      -.0571538       {txt}Skewness      {res} 1.096106
+{txt}99%    {res}-.0736803      -.0561476       {txt}Kurtosis      {res}   4.1657
+
+                  {txt}95% upper bound: s5diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0805337       .0613565
+{txt} 5%    {res}  .093506       .0624573
+{txt}10%    {res}  .098759       .0652727       {txt}Obs         {res}      2,308
+{txt}25%    {res} .1081401       .0684947       {txt}Sum of wgt. {res}      2,308
+
+{txt}50%    {res} .1174865                      {txt}Mean          {res} .1150477
+                        {txt}Largest       Std. dev.     {res} .0114447
+{txt}75%    {res} .1251588       .1274327
+{txt}90%    {res} .1271333       .1274329       {txt}Variance      {res}  .000131
+{txt}95%    {res} .1273786       .1274334       {txt}Skewness      {res}-1.096562
+{txt}99%    {res} .1274304       .1274341       {txt}Kurtosis      {res} 4.167184
+{txt}
+{com}. su s6diff80* if sample_final==1 & _trans6==1, det
+
+                         {txt}Prediction
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .0004315       .0003484
+{txt} 5%    {res} .0005085       .0003559
+{txt}10%    {res}  .000563       .0003573       {txt}Obs         {res}      5,733
+{txt}25%    {res} .0006865       .0003579       {txt}Sum of wgt. {res}      5,733
+
+{txt}50%    {res}  .001149                      {txt}Mean          {res} .0014825
+                        {txt}Largest       Std. dev.     {res}  .000846
+{txt}75%    {res} .0022252       .0041437
+{txt}90%    {res}  .002571       .0041686       {txt}Variance      {res} 7.16e-07
+{txt}95%    {res} .0027596       .0042533       {txt}Skewness      {res}  .384517
+{txt}99%    {res}  .003466       .0044649       {txt}Kurtosis      {res} 1.898427
+
+                  {txt}95% lower bound: s6diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-.0201702      -.0258063
+{txt} 5%    {res}-.0158128       -.024548
+{txt}10%    {res} -.014749      -.0240984       {txt}Obs         {res}      5,733
+{txt}25%    {res}-.0128228      -.0239066       {txt}Sum of wgt. {res}      5,733
+
+{txt}50%    {res}-.0066197                      {txt}Mean          {res}-.0085714
+                        {txt}Largest       Std. dev.     {res} .0048532
+{txt}75%    {res}-.0039956      -.0021615
+{txt}90%    {res}-.0033031      -.0021478       {txt}Variance      {res} .0000236
+{txt}95%    {res} -.003002      -.0021416       {txt}Skewness      {res}-.3845251
+{txt}99%    {res}-.0025687      -.0020861       {txt}Kurtosis      {res}  1.91548
+
+                  {txt}95% upper bound: s6diff80
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  .003429        .002783
+{txt} 5%    {res} .0040191       .0028534
+{txt}10%    {res} .0044268       .0028623       {txt}Obs         {res}      5,733
+{txt}25%    {res} .0053719       .0028773       {txt}Sum of wgt. {res}      5,733
+
+{txt}50%    {res} .0089142                      {txt}Mean          {res} .0115365
+                        {txt}Largest       Std. dev.     {res} .0065451
+{txt}75%    {res} .0172834       .0321939
+{txt}90%    {res} .0198926       .0324356       {txt}Variance      {res} .0000428
+{txt}95%    {res} .0213389       .0330546       {txt}Skewness      {res} .3844506
+{txt}99%    {res} .0271156       .0347361       {txt}Kurtosis      {res} 1.910807
+{txt}
+{com}. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

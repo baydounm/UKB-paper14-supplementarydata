@@ -1,0 +1,282 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\May Baydoun_folder\UK_BIOBANK_PROJECT\UKB_PAPER9B_TDIPDDEMMORT\DATA\finaldata_unimputedfin",clear
+{txt}
+{com}. 
+. 
+. capture drop follow_up_time_dem
+{txt}
+{com}. gen follow_up_time_dem=Age_dementia-baselineage
+{txt}(138,606 missing values generated)
+
+{com}. 
+. 
+. capture drop follow_up_time_PD
+{txt}
+{com}. gen follow_up_time_PD=Age_PD-baselineage
+{txt}(138,606 missing values generated)
+
+{com}. 
+. 
+. 
+. capture drop follow_up_time_mort
+{txt}
+{com}. gen follow_up_time_mort=Age_death-baselineage
+{txt}(138,606 missing values generated)
+
+{com}. 
+. 
+. capture drop follow_up_time_dem_PD_death
+{txt}
+{com}. egen follow_up_time_dem_PD_death=rowmin(follow_up_time_dem follow_up_time_PD follow_up_time_mort)
+{txt}(138,606 missing values generated)
+
+{com}. 
+. 
+. su follow_up_time_dem_PD_death if sample_final==1, det
+
+                 {txt}follow_up_time_dem_PD_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 2.839149        .002739
+{txt} 5%    {res} 8.492813       .0109482
+{txt}10%    {res} 11.35387       .0136909       {txt}Obs         {res}    363,663
+{txt}25%    {res} 11.80014        .019165       {txt}Sum of wgt. {res}    363,663
+
+{txt}50%    {res} 12.61328                      {txt}Mean          {res} 12.25776
+                        {txt}Largest       Std. dev.     {res} 1.958156
+{txt}75%    {res} 13.32786       15.63313
+{txt}90%    {res} 13.77139       15.63586       {txt}Variance      {res} 3.834375
+{txt}95%    {res} 14.04517       15.63587       {txt}Skewness      {res}-3.099912
+{txt}99%    {res} 14.42026       15.63587       {txt}Kurtosis      {res} 15.00052
+{txt}
+{com}. 
+. 
+. capture drop sample_final2
+{txt}
+{com}. gen sample_final2=sample_final if follow_up_time_dem_PD>3
+{txt}(142,518 missing values generated)
+
+{com}. 
+. tab sample_final2
+
+{txt}sample_fina {c |}
+         l2 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}    359,751      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    359,751      100.00
+{txt}
+{com}. 
+. 
+. su follow_up_time_dem_PD_death if sample_final2==1, det
+
+                 {txt}follow_up_time_dem_PD_death
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 4.802193       3.000683
+{txt} 5%    {res} 9.505821       3.000683
+{txt}10%    {res} 11.37851       3.000687       {txt}Obs         {res}    359,751
+{txt}25%    {res} 11.87406       3.003422       {txt}Sum of wgt. {res}    359,751
+
+{txt}50%    {res} 12.62149                      {txt}Mean          {res} 12.37197
+                        {txt}Largest       Std. dev.     {res} 1.629848
+{txt}75%    {res} 13.33607       15.63313
+{txt}90%    {res} 13.77413       15.63586       {txt}Variance      {res} 2.656406
+{txt}95%    {res} 14.05065       15.63587       {txt}Skewness      {res}-2.683345
+{txt}99%    {res}   14.423       15.63587       {txt}Kurtosis      {res} 12.89391
+{txt}
+{com}. 
+. 
+. 
+. ************DEMENTIA*******************
+. 
+. stset Age_dementia, failure(dem_diag==1) enter(AGE) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}dem_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_dementia[_n-1], Age_dementia]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,269{txt}  total observations
+{res}    138,606{txt}  event time missing (Age_dementia>=.){col 61}PROBABLE ERROR
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}      6,326{txt}  failures in single-failure-per-subject data
+{res}  4,464,960{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. stcox ztownsend zLE8_TOTALSCOREinv AGE SEX NonWhite householdsize SESres  if sample_final2==1
+
+{col 10}{txt}Failure {bf:_d}: {res}dem_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_dementia
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-70551.259
+{txt}Iteration 1:  Log likelihood = {res}-70147.068
+{txt}Iteration 2:  Log likelihood = {res}-70144.151
+{txt}Iteration 3:  Log likelihood = {res} -70144.15
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res} -70144.15
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:359,751}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:359,751}
+{txt}No. of failures = {res}{ralign 11:6,101}
+{txt}Time at risk    = {res}{ralign 11:4,457,081.3}
+{col 56}{txt}{lalign 13:LR chi2({res:7})} = {res}{ralign 7:814.22}
+{txt}Log likelihood = {res}-70144.15{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0000}
+
+{txt}{hline 19}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}                _t{col 20}{c |} Haz. ratio{col 32}   Std. err.{col 44}      z{col 52}   P>|z|{col 60}     [95% con{col 73}f. interval]
+{hline 19}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ztownsend {c |}{col 20}{res}{space 2} 1.166547{col 32}{space 2} .0144871{col 43}{space 1}   12.40{col 52}{space 3}0.000{col 60}{space 4} 1.138495{col 73}{space 3} 1.195289
+{txt}zLE8_TOTALSCOREinv {c |}{col 20}{res}{space 2} 1.141084{col 32}{space 2} .0153558{col 43}{space 1}    9.81{col 52}{space 3}0.000{col 60}{space 4} 1.111381{col 73}{space 3} 1.171581
+{txt}{space 15}AGE {c |}{col 20}{res}{space 2} .9224427{col 32}{space 2} .0049223{col 43}{space 1}  -15.13{col 52}{space 3}0.000{col 60}{space 4} .9128454{col 73}{space 3} .9321409
+{txt}{space 15}SEX {c |}{col 20}{res}{space 2} .7896085{col 32}{space 2} .0204587{col 43}{space 1}   -9.12{col 52}{space 3}0.000{col 60}{space 4} .7505112{col 73}{space 3} .8307425
+{txt}{space 10}NonWhite {c |}{col 20}{res}{space 2} 1.126166{col 32}{space 2} .0761255{col 43}{space 1}    1.76{col 52}{space 3}0.079{col 60}{space 4} .9864238{col 73}{space 3} 1.285704
+{txt}{space 5}householdsize {c |}{col 20}{res}{space 2} .9477933{col 32}{space 2} .0148768{col 43}{space 1}   -3.42{col 52}{space 3}0.001{col 60}{space 4} .9190792{col 73}{space 3} .9774044
+{txt}{space 12}SESres {c |}{col 20}{res}{space 2}  .719496{col 32}{space 2} .0186754{col 43}{space 1}  -12.68{col 52}{space 3}0.000{col 60}{space 4} .6838083{col 73}{space 3} .7570461
+{txt}{hline 19}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. 
+. *************PD*****************
+. 
+. stset Age_PD, failure(PD_diag==1) enter(AGE) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}PD_diag==1
+{col 1}{txt}Observed time interval: {res}(Age_PD[_n-1], Age_PD]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,269{txt}  total observations
+{res}    138,606{txt}  event time missing (Age_PD>=.){col 61}PROBABLE ERROR
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}      2,586{txt}  failures in single-failure-per-subject data
+{res}  4,470,856{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. stcox ztownsend zLE8_TOTALSCOREinv AGE SEX NonWhite householdsize SESres  if sample_final2==1
+
+{col 10}{txt}Failure {bf:_d}: {res}PD_diag==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_PD
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-28802.404
+{txt}Iteration 1:  Log likelihood = {res}-28603.962
+{txt}Iteration 2:  Log likelihood = {res}-28603.877
+{txt}Iteration 3:  Log likelihood = {res}-28603.877
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res}-28603.877
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:359,751}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:359,751}
+{txt}No. of failures = {res}{ralign 11:2,442}
+{txt}Time at risk    = {res}{ralign 11:4,462,784.2}
+{col 56}{txt}{lalign 13:LR chi2({res:7})} = {res}{ralign 7:397.05}
+{txt}Log likelihood = {res}-28603.877{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0000}
+
+{txt}{hline 19}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}                _t{col 20}{c |} Haz. ratio{col 32}   Std. err.{col 44}      z{col 52}   P>|z|{col 60}     [95% con{col 73}f. interval]
+{hline 19}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ztownsend {c |}{col 20}{res}{space 2}  1.05737{col 32}{space 2} .0217942{col 43}{space 1}    2.71{col 52}{space 3}0.007{col 60}{space 4} 1.015505{col 73}{space 3}  1.10096
+{txt}zLE8_TOTALSCOREinv {c |}{col 20}{res}{space 2} .9783951{col 32}{space 2} .0210138{col 43}{space 1}   -1.02{col 52}{space 3}0.309{col 60}{space 4} .9380636{col 73}{space 3} 1.020461
+{txt}{space 15}AGE {c |}{col 20}{res}{space 2} .9213326{col 32}{space 2} .0070236{col 43}{space 1}  -10.75{col 52}{space 3}0.000{col 60}{space 4} .9076689{col 73}{space 3} .9352019
+{txt}{space 15}SEX {c |}{col 20}{res}{space 2} .4989715{col 32}{space 2} .0211989{col 43}{space 1}  -16.36{col 52}{space 3}0.000{col 60}{space 4} .4591053{col 73}{space 3} .5422995
+{txt}{space 10}NonWhite {c |}{col 20}{res}{space 2}  1.05507{col 32}{space 2} .1156215{col 43}{space 1}    0.49{col 52}{space 3}0.625{col 60}{space 4} .8511398{col 73}{space 3} 1.307861
+{txt}{space 5}householdsize {c |}{col 20}{res}{space 2} 1.015785{col 32}{space 2} .0164355{col 43}{space 1}    0.97{col 52}{space 3}0.333{col 60}{space 4} .9840772{col 73}{space 3} 1.048514
+{txt}{space 12}SESres {c |}{col 20}{res}{space 2} .9265506{col 32}{space 2} .0362683{col 43}{space 1}   -1.95{col 52}{space 3}0.051{col 60}{space 4} .8581244{col 73}{space 3} 1.000433
+{txt}{hline 19}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. 
+. *************MORTALITY*****************
+. 
+. 
+. stset Age_death, failure(died==1) enter(AGE) id(n_eid) scale(1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}n_eid
+{col 10}{txt}Failure event: {res}died==1
+{col 1}{txt}Observed time interval: {res}(Age_death[_n-1], Age_death]
+{col 6}{txt}Enter on or after: {res}time AGE
+{col 6}{txt}Exit on or before: {res}failure
+
+{txt}{hline 74}
+{res}    502,269{txt}  total observations
+{res}    138,606{txt}  event time missing (Age_death>=.){col 61}PROBABLE ERROR
+{hline 74}
+{res}    363,663{txt}  observations remaining, representing
+{res}    363,663{txt}  subjects
+{res}     31,785{txt}  failures in single-failure-per-subject data
+{res}  4,479,161{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res} 50.00137
+                                          {txt}Last observed exit t = {res} 87.63313
+{txt}
+{com}. 
+. stcox ztownsend zLE8_TOTALSCOREinv AGE SEX NonWhite householdsize SESres  if sample_final2==1
+
+{col 10}{txt}Failure {bf:_d}: {res}died==1
+{col 4}{txt}Analysis time {bf:_t}: {res}Age_death
+{col 3}{txt}Enter on or after: {res}time AGE
+{col 9}{txt}ID variable: {res}n_eid
+
+{txt}Iteration 0:  Log likelihood = {res}-331280.16
+{txt}Iteration 1:  Log likelihood = {res}-327196.45
+{txt}Iteration 2:  Log likelihood = {res}-327160.15
+{txt}Iteration 3:  Log likelihood = {res}-327160.14
+{txt}Refining estimates:
+Iteration 0:  Log likelihood = {res}-327160.14
+
+{txt}Cox regression with Breslow method for ties
+
+No. of subjects = {res}{ralign 11:359,751}{col 56}{txt}{lalign 13:Number of obs} = {res}{ralign 7:359,751}
+{txt}No. of failures = {res}{ralign 11:28,010}
+{txt}Time at risk    = {res}{ralign 11:4,469,974.9}
+{col 56}{txt}{lalign 13:LR chi2({res:7})} = {res}{ralign 7:8240.04}
+{txt}Log likelihood = {res}-327160.14{col 56}{txt}{lalign 13:Prob > chi2} = {res}{ralign 7:0.0000}
+
+{txt}{hline 19}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}                _t{col 20}{c |} Haz. ratio{col 32}   Std. err.{col 44}      z{col 52}   P>|z|{col 60}     [95% con{col 73}f. interval]
+{hline 19}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ztownsend {c |}{col 20}{res}{space 2}  1.18279{col 32}{space 2} .0067217{col 43}{space 1}   29.54{col 52}{space 3}0.000{col 60}{space 4} 1.169689{col 73}{space 3} 1.196038
+{txt}zLE8_TOTALSCOREinv {c |}{col 20}{res}{space 2} 1.321996{col 32}{space 2} .0081256{col 43}{space 1}   45.42{col 52}{space 3}0.000{col 60}{space 4} 1.306166{col 73}{space 3} 1.338019
+{txt}{space 15}AGE {c |}{col 20}{res}{space 2} .9066808{col 32}{space 2} .0019931{col 43}{space 1}  -44.56{col 52}{space 3}0.000{col 60}{space 4} .9027827{col 73}{space 3} .9105958
+{txt}{space 15}SEX {c |}{col 20}{res}{space 2}  .603669{col 32}{space 2} .0074221{col 43}{space 1}  -41.05{col 52}{space 3}0.000{col 60}{space 4} .5892959{col 73}{space 3} .6183927
+{txt}{space 10}NonWhite {c |}{col 20}{res}{space 2} .8794018{col 32}{space 2} .0291065{col 43}{space 1}   -3.88{col 52}{space 3}0.000{col 60}{space 4} .8241652{col 73}{space 3} .9383405
+{txt}{space 5}householdsize {c |}{col 20}{res}{space 2} .9368635{col 32}{space 2} .0066041{col 43}{space 1}   -9.25{col 52}{space 3}0.000{col 60}{space 4} .9240087{col 73}{space 3}  .949897
+{txt}{space 12}SESres {c |}{col 20}{res}{space 2} .7562566{col 32}{space 2} .0088668{col 43}{space 1}  -23.83{col 52}{space 3}0.000{col 60}{space 4} .7390761{col 73}{space 3} .7738365
+{txt}{hline 19}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}
